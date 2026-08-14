@@ -1,4 +1,12 @@
 # =========================================================================
+# ROOT PROTECTION (Mencegah file konfigurasi nyasar di root folder)
+# =========================================================================
+/Pipfile
+/Pipfile.lock
+/.env
+/.env.example
+
+# =========================================================================
 # FRONTEND (React / Vite)
 # =========================================================================
 frontend/node_modules/
@@ -21,12 +29,14 @@ backend/*.py[cod]
 backend/*$py.class
 backend/.venv/
 backend/Pipenv.venv
+backend/Pipfile
+backend/Pipfile.lock
 backend/.env  
+backend/.env.example  
 
 # =========================================================================
 # EDITOR, SYSTEM & GLOBAL SENSITIVE FILES
 # =========================================================================
-.env
 .vscode/*
 !.vscode/extensions.json
 .idea/

@@ -1,8 +1,103 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-dark: #303841;
-  --color-brand-slate: #3a4750;
-  --color-brand-yellow: #f6c90e;
-  --color-brand-light: #eeeeee;
+  --color-primary: #000000;
+  --color-on-primary: #ffffff;
+  --color-secondary: #5c604e;
+  --color-background: #f9f9f7;
+  --color-surface: #f9f9f7;
+  --color-surface-white: #ffffff;
+  --color-border-subtle: #E5E5E2;
+  --color-text-muted: #6B6B6B;
+  --color-surface-container-low: #f4f4f2;
+  --color-surface-container: #eeeeec;
+  --color-surface-container-high: #e8e8e6;
+  --color-surface-container-highest: #e2e3e1;
+  --color-surface-tint: #5f5e5e;
+  --color-outline-variant: #c4c7c7;
+
+  --font-geist: "Geist", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  --spacing-section-gap: 80px;
+  --spacing-margin-desktop: 40px;
+  --spacing-margin-mobile: 16px;
+  --spacing-gutter: 16px;
+  --spacing-base: 8px;
+}
+
+@utility font-headline-display {
+  font-family: var(--font-geist);
+  font-size: 48px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+@utility font-headline-lg {
+  font-family: var(--font-geist);
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+
+@utility font-headline-lg-mobile {
+  font-family: var(--font-geist);
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+@utility font-body-lg {
+  font-family: var(--font-inter);
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+}
+
+@utility font-body-md {
+  font-family: var(--font-inter);
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+@utility font-label-caps {
+  font-family: var(--font-geist);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+@utility font-nav-item {
+  font-family: var(--font-geist);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+@utility font-technical-data {
+  font-family: var(--font-geist);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-on-background);
 }
