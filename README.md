@@ -42,6 +42,36 @@ project-gidora/
 │
 └── frontend/
     ├── src/
+    │   ├── assets/
+    │   │   ├── products/
+    │   │   └── ...(assets campuran)
+    │   ├── components/
+    │   │   ├── Footer.jsx
+    │   │   ├── Navbar.jsx
+    │   │   ├── ProductCard.jsx
+    │   │   ├── ProductFilterDrawer.jsx
+    │   │   ├── ProductGrid.jsx
+    │   │   ├── ProductToolbar.jsx
+    │   │   └── SearchOverlay.jsx
+    │   ├── data/
+    │   │   └── products.js
+    │   ├── layouts/
+    │   │   └── MainLayout.jsx
+    │   ├── pages/
+    │   │   ├── About.jsx
+    │   │   ├── Home.jsx
+    │   │   ├── Login.jsx
+    │   │   ├── ProductDetail.jsx
+    │   │   ├── Products.jsx
+    │   │   └── Register.jsx
+    │   ├── routes/
+    │   ├── services/
+    │   ├── utilities/
+    │   │   ├── productFilter.js
+    │   │   └── ScrollToTop.jsx
+    │   ├── App.jsx
+    │   ├── index.css
+    │   └── main.jsx
     ├── public/
     ├── package.json
     ├── pnpm-lock.yaml

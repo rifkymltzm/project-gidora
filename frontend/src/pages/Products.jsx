@@ -1,236 +1,171 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import ProductCard from "../components/ProductCard";
+
+import ProductFilterDrawer from "../components/ProductFilterDrawer";
+import ProductGrid from "../components/ProductGrid";
+import ProductToolbar from "../components/ProductToolbar";
 import PRODUCTS_DATA from "../data/products";
+
+import {
+  DEFAULT_FILTERS,
+  getActiveFilterCount,
+  getFilteredProducts,
+  normalizeValue,
+} from "../utilities/productFilters";
+
+const INITIAL_LIMIT = 8;
+const LOAD_MORE_AMOUNT = 4;
 
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Filter States
-  const [categoryFilter, setCategoryFilter] = useState("all");
-  const [sizeFilter, setSizeFilter] = useState("all");
-  const [colorFilter, setColorFilter] = useState("all");
+  const [filters, setFilters] = useState(() =>
+    getFiltersFromSearchParams(searchParams),
+  );
+
   const [sortBy, setSortBy] = useState("featured");
+  const [limit, setLimit] = useState(INITIAL_LIMIT);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  // Pagination
-  const [limit, setLimit] = useState(8);
-
-  // Sync category with URL
   useEffect(() => {
-    const urlCategory = searchParams.get("category");
-
-    if (urlCategory) {
-      setCategoryFilter(urlCategory.toLowerCase());
-    } else {
-      setCategoryFilter("all");
-    }
+    setFilters(getFiltersFromSearchParams(searchParams));
+    setLimit(INITIAL_LIMIT);
   }, [searchParams]);
 
-  // Handle category filter
-  const handleCategoryChange = (e) => {
-    const value = e.target.value.toLowerCase();
-
-    setCategoryFilter(value);
-
-    const newParams = new URLSearchParams(searchParams);
-
-    if (value === "all") {
-      newParams.delete("category");
-    } else {
-      newParams.set("category", value);
-    }
-
-    setSearchParams(newParams);
-  };
-
-  // Filter & Sort
-  const filteredProducts = PRODUCTS_DATA.filter((product) => {
-    // Category / Gender
-    if (categoryFilter !== "all") {
-      const matchCategory = product.category?.toLowerCase() === categoryFilter;
-
-      const matchGender = product.gender?.toLowerCase() === categoryFilter;
-
-      const matchTechnical =
-        categoryFilter === "technical" &&
-        product.category?.toLowerCase() === "outerwear";
-
-      if (!matchCategory && !matchGender && !matchTechnical) {
-        return false;
-      }
-    }
-
-    // Size
-    if (
-      sizeFilter !== "all" &&
-      !product.sizes?.includes(sizeFilter.toLowerCase())
-    ) {
-      return false;
-    }
-
-    // Color
-    if (
-      colorFilter !== "all" &&
-      product.color?.toLowerCase() !== colorFilter.toLowerCase()
-    ) {
-      return false;
-    }
-
-    return true;
-  }).sort((a, b) => {
-    if (sortBy === "price_low") {
-      return a.priceNum - b.priceNum;
-    }
-
-    if (sortBy === "price_high") {
-      return b.priceNum - a.priceNum;
-    }
-
-    if (sortBy === "newest") {
-      if (a.badge === "NEW" && b.badge !== "NEW") return -1;
-      if (a.badge !== "NEW" && b.badge === "NEW") return 1;
-
-      return a.id.localeCompare(b.id);
-    }
-
-    // Featured
-    return a.id.localeCompare(b.id);
-  });
+  const filteredProducts = useMemo(
+    () => getFilteredProducts(PRODUCTS_DATA, filters, sortBy),
+    [filters, sortBy],
+  );
 
   const visibleProducts = filteredProducts.slice(0, limit);
+  const activeFilterCount = getActiveFilterCount(filters);
+
+  const handleApplyFilters = (newFilters) => {
+    setFilters(newFilters);
+    setLimit(INITIAL_LIMIT);
+
+    const params = new URLSearchParams(searchParams);
+
+    updateParam(params, "category", newFilters.category);
+    updateParam(params, "gender", newFilters.gender);
+
+    setSearchParams(params);
+  };
+
+  const handleSortChange = (value) => {
+    setSortBy(value);
+    setLimit(INITIAL_LIMIT);
+  };
+
+  const resetFilters = () => {
+    setFilters(DEFAULT_FILTERS);
+    setSortBy("featured");
+    setLimit(INITIAL_LIMIT);
+    setSearchParams({});
+  };
+
+  const handleLoadMore = () => {
+    setLimit((current) => current + LOAD_MORE_AMOUNT);
+  };
 
   return (
-    <div className="flex-grow w-full bg-surface min-h-[70vh]">
-      {/* =========================================
-          PAGE HEADER
-      ========================================= */}
-      <header className="px-margin-mobile md:px-margin-desktop pt-28 md:pt-32 pb-12 md:pb-20 flex flex-col md:flex-row justify-between items-baseline gap-4 max-w-7xl mx-auto">
-        <h1 className="font-headline-display text-primary uppercase">Shop</h1>
+    <div className="min-h-[70vh] w-full bg-surface">
+      {/* HEADER */}
 
-        <span className="font-technical-data text-text-muted">
-          {filteredProducts.length} PRODUCTS
-        </span>
+      <header className="mx-auto flex max-w-7xl flex-col gap-4 px-margin-mobile pb-10 pt-28 md:flex-row md:items-end md:justify-between md:px-margin-desktop md:pb-14 md:pt-32">
+        <div>
+          <p className="mb-3 font-label-caps tracking-[0.18em] text-text-muted">
+            GIDORA / COLLECTION
+          </p>
+
+          <h1 className="font-headline-display uppercase text-primary">SHOP</h1>
+        </div>
+
+        <div className="font-technical-data text-text-muted">
+          {String(filteredProducts.length).padStart(2, "0")} PRODUCTS
+        </div>
       </header>
 
-      {/* =========================================
-          FILTER BAR
-      ========================================= */}
-      <div className="w-full border-y border-border-subtle bg-surface sticky top-20 z-40 px-margin-mobile md:px-margin-desktop py-4">
-        <div className="mx-auto max-w-7xl w-full flex flex-wrap items-center justify-between gap-4">
-          {/* Filters */}
-          <div className="flex items-center gap-6 overflow-x-auto no-scrollbar">
-            {/* Category */}
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="font-label-caps text-text-muted">Category:</span>
+      {/* TOOLBAR */}
 
-              <select
-                value={categoryFilter}
-                onChange={handleCategoryChange}
-                className="bg-transparent border-none font-technical-data text-primary focus:ring-0 p-0 cursor-pointer uppercase text-xs"
-              >
-                <option value="all">All</option>
-                <option value="outerwear">Outerwear</option>
-                <option value="pants">Pants</option>
-                <option value="shirts">Shirts</option>
-                <option value="accessories">Accessories</option>
-                <option value="men">Men</option>
-                <option value="women">Women</option>
-              </select>
-            </div>
+      <ProductToolbar
+        productCount={filteredProducts.length}
+        activeFilterCount={activeFilterCount}
+        onOpenFilters={() => setIsFilterOpen(true)}
+        sortBy={sortBy}
+        onSortChange={handleSortChange}
+      />
 
-            {/* Size */}
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="font-label-caps text-text-muted">Size:</span>
+      {/* PRODUCTS */}
 
-              <select
-                value={sizeFilter}
-                onChange={(e) => setSizeFilter(e.target.value)}
-                className="bg-transparent border-none font-technical-data text-primary focus:ring-0 p-0 cursor-pointer uppercase text-xs"
-              >
-                <option value="all">All</option>
-                <option value="xs">XS</option>
-                <option value="s">S</option>
-                <option value="m">M</option>
-                <option value="l">L</option>
-                <option value="xl">XL</option>
-              </select>
-            </div>
+      <section className="mx-auto max-w-7xl px-margin-mobile py-8 md:px-margin-desktop md:py-12">
+        <ProductGrid products={visibleProducts} />
 
-            {/* Color */}
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="font-label-caps text-text-muted">Color:</span>
+        {/* EMPTY STATE */}
 
-              <select
-                value={colorFilter}
-                onChange={(e) => setColorFilter(e.target.value)}
-                className="bg-transparent border-none font-technical-data text-primary focus:ring-0 p-0 cursor-pointer uppercase text-xs"
-              >
-                <option value="all">All</option>
-                <option value="black">Black</option>
-                <option value="navy">Navy</option>
-                <option value="olive">Olive</option>
-                <option value="beige">Beige</option>
-              </select>
-            </div>
-          </div>
+        {filteredProducts.length === 0 && (
+          <div className="flex min-h-[280px] flex-col items-center justify-center border-y border-border-subtle">
+            <p className="font-label-caps text-text-muted">NO PRODUCTS FOUND</p>
 
-          {/* Sort */}
-          <div className="flex items-center gap-2 shrink-0 ml-auto">
-            <span className="font-label-caps text-text-muted">Sort By:</span>
-
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="bg-transparent border-none font-technical-data text-primary focus:ring-0 p-0 cursor-pointer uppercase text-xs"
-            >
-              <option value="featured">Featured</option>
-              <option value="newest">Newest</option>
-              <option value="price_low">Price: Low to High</option>
-              <option value="price_high">Price: High to Low</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* =========================================
-          PRODUCT GRID
-      ========================================= */}
-      <div className="mx-auto max-w-7xl px-margin-mobile md:px-margin-desktop py-8">
-        {visibleProducts.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-border-subtle border border-border-subtle w-full">
-            {visibleProducts.map((product) => (
-              <div key={product.id} className="bg-surface">
-                <ProductCard
-                  id={product.id}
-                  name={product.name}
-                  category={product.category}
-                  price={product.price}
-                  badge={product.badge}
-                  images={product.images}
-                />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 border border-border-subtle bg-surface">
-            <p className="font-body-md text-text-muted">
-              Tidak ada produk yang cocok dengan filter yang dipilih.
+            <p className="mt-2 text-center font-body-md text-text-muted">
+              Tidak ada produk yang sesuai dengan filter saat ini.
             </p>
+
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="mt-6 border border-primary px-6 py-3 font-label-caps text-primary transition-colors duration-300 hover:bg-primary hover:text-on-primary"
+            >
+              RESET FILTERS
+            </button>
           </div>
         )}
 
-        {/* Load More */}
+        {/* LOAD MORE */}
+
         {visibleProducts.length < filteredProducts.length && (
-          <div className="w-full flex justify-center py-section-gap">
+          <div className="flex w-full justify-center py-section-gap">
             <button
-              onClick={() => setLimit((prev) => prev + 4)}
-              className="bg-primary text-on-primary font-label-caps px-12 py-4 rounded-none hover:bg-surface-tint transition-colors w-full max-w-xs"
+              type="button"
+              onClick={handleLoadMore}
+              className="w-full max-w-xs bg-primary px-12 py-4 font-label-caps text-on-primary transition-colors duration-300 hover:bg-surface-tint"
             >
               LOAD MORE
             </button>
           </div>
         )}
-      </div>
+      </section>
+
+      {/* FILTER DRAWER */}
+
+      <ProductFilterDrawer
+        open={isFilterOpen}
+        filters={filters}
+        onApply={handleApplyFilters}
+        onClose={() => setIsFilterOpen(false)}
+      />
     </div>
   );
+}
+
+function getFiltersFromSearchParams(searchParams) {
+  return {
+    ...DEFAULT_FILTERS,
+    category: getUrlFilter(searchParams, "category"),
+    gender: getUrlFilter(searchParams, "gender"),
+  };
+}
+
+function getUrlFilter(searchParams, key) {
+  const value = searchParams.get(key);
+  return value ? normalizeValue(value) : "all";
+}
+
+function updateParam(params, key, value) {
+  if (value === "all") {
+    params.delete(key);
+    return;
+  }
+
+  params.set(key, value);
 }

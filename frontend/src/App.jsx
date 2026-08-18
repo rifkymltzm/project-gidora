@@ -8,23 +8,29 @@ import ProductDetail from "./pages/ProductDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
+import Cart from "./pages/Cart";
+
+import CartProvider from "./contexts/CartContext";
 import ScrollToTop from "./utilities/ScrollToTop";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <ScrollToTop />
+      <CartProvider>
+        <ScrollToTop />
 
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
-      </Routes>
+        <Routes>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+        </Routes>
+      </CartProvider>
     </BrowserRouter>
   );
 }

@@ -1,132 +1,318 @@
 // src/data/products.js
 
+const productImages = import.meta.glob("../assets/products/*.webp", {
+  eager: true,
+  import: "default",
+});
+
+const getImage = (filename) => productImages[`../assets/products/${filename}`];
+
 const PRODUCTS_DATA = [
   {
     id: "1",
-    name: "GIDORA TECH JACKET",
+    name: "GIDORA RIDING JACKET",
     category: "Outerwear",
-    gender: "men",
-    color: "black",
+    gender: "unisex",
+    color: ["black"],
     sizes: ["m", "l", "xl"],
     price: "Rp 2.490.000",
     priceNum: 2490000,
     badge: "NEW",
-    images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBrK70SeRpttvLfFY6OS8tB2kSjsghl_Awee3nQRsOZZas_gqsy0o7E4zg-giY8b6N_mtC6DGFsp34i-o-P3lKMwYDwwoGEl57d-RvsH_CbArmRxvnSELFk6grK1JlnB2PcsQuinmp9rKrWD3PoE8queZ5OuIdTGKOOk1sQ8cSVYtmhrmG06N3bvoMfDOXxokM_uAuQPw0vJ0QQN4mNLWdV0Yt0KeHmCid9kyigLDovs8Yj4ImV8ytt",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAmzXeEDVTuM8sgNa1wQFzfTp7eOM4CihYuqq4XKhNAC3p2-J81fQ246suvWQzpuwYImSkT2DNn5aE6Y26ur-nLV_vCUfrb6sS7J5p51EnMzsia6mj5sLVbFIgd5fS37cjPua2rYqHhcarGwVgorhfN1NkjERzfaLsPzzPiGw48usLqjY-_KQ7TAQ1Ws0R_AqQYLGdO4tlDUVyzj7L0NbrRv5Vo7O-MNtFPJK-VoCHSGQQKXDJJUIXB",
-    ],
+    images: {
+      primary: getImage("riding_jacket1.webp"),
+      detail: getImage("riding_jacket_detail.webp"),
+      secondary: [
+        getImage("riding_jacket2.webp"),
+        getImage("riding_jacket3.webp"),
+      ],
+    },
   },
 
   {
     id: "2",
-    name: "UTILITY VEST 02",
+    name: "UTILITY VEST BLACK",
     category: "Outerwear",
-    gender: "men",
-    color: "black",
+    gender: "unisex",
+    color: ["black"],
     sizes: ["s", "m", "l"],
     price: "Rp 1.850.000",
     priceNum: 1850000,
     badge: "NEW",
-    images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDEglTZ-cSi88SHwrcVxPBsusumyj8Xr-PJICIHAdlfdhI_FA-U1eZZCVmeTxExjYrTGTRk9L6mfOsiPQT2eTzjt4_veVOStF7fu4nSXRZ91NXyBUH15CJpzqlFoK9CARgsLBJ1SbkK7y8vrTXEAb8j0W06MdojVAQ6zTNJbvEWicTY6E3rUE_QlKkDbRGujWN3lMYly0_G4K5IEqxWwb-OSeSusuQmLvRfuxxCo2PDe4QC2gMIZ8eY",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD3GhnAT0GVyJ9ALyTd1Saiw6QKXeZVC4P1SfHMsaDXwwGg2LsXNH3uwXvslMH-naEH9pCpQGZianFrp6cz_lqGdnH8aaNfi6QNZpCACW4RfhilAGC4HfplqRxyzLhIDWQWKi5Nf6XlU06bI8Y3bXcIBP_aIhNhxWqZVg1EpK3OGFJaRQXiJjVyjd2xcPbsENn6rAhUsc99-AUlcIMPyY3xMJmTn6ImFF9CdVJgFKe-VEC_mGi9LUX7",
-    ],
+    images: {
+      primary: getImage("vest_black1.webp"),
+      detail: getImage("vest_black_detail.webp"),
+      secondary: [getImage("vest_black2.webp"), getImage("vest_black3.webp")],
+    },
   },
 
   {
     id: "3",
-    name: "ARTICULATED CARGO",
+    name: "MEN'S TECHNICAL CARGO PANTS",
     category: "Pants",
     gender: "men",
-    color: "black",
+    color: ["black", "navy", "olive"],
     sizes: ["m", "l"],
     price: "Rp 1.950.000",
     priceNum: 1950000,
-    badge: "",
-    images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuC_vZj9McjnSCC7tm8gTHEgAw0mhkiRdnDfAEziDc1Fcr_6nrm98XFfIRnB0JmzVZ5IxnvhH1cn20GkYEtikxMpiBfumjFDPA-CFfRIrwNiCfphlL21z_2-7OeE-ycN9KQOiQmW0GWtUq3hGGQDJAKo4c_4YqtLylPbgoMiYLzf-dxEj0Mk41NFUfja2pomiRYzKjDEbuKMnffoAay5FYHMyX_OXnUxXHbZUgQ8eQiR3cmM-C7boDuW",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuC2O-CjtrKGHjzBF8bg0LQNEoNvDnOb3pNmtM5aBV3-eyMKwkwXRiqDIVXcW7Wyro_Meo62wHgS_opF1Rpz4NqP8v63la3QrffGDNIdkzCtvPdFdBsxilZBsP1Ipm0KGHEjt4xFfDqfl9D49BtFZyP8ZGJjWYqJW1z0HHxpAdw2s0nXgZjJ86QnjMK5CIquIRpueJJ0x7g-_sHnzYpad_p-qSK8KaEU2WYVXd0qH-eDgcw1M0FrnzE",
-    ],
+    badge: "BEST SELLER",
+    images: {
+      primary: getImage("men's_technical_cargo1.webp"),
+      detail: getImage("men's_technical_cargo_detail.webp"),
+      secondary: [
+        getImage("men's_technical_cargo2.webp"),
+        getImage("men's_technical_cargo3.webp"),
+        getImage("men's_technical_cargo4.webp"),
+      ],
+    },
   },
 
   {
     id: "4",
-    name: "SLING SYSTEM 01",
+    name: "WAIST BAG SYSTEM",
     category: "Accessories",
-    gender: "unisex",
-    color: "black",
+    gender: "men",
+    color: ["black"],
     sizes: ["xs", "s", "m", "l", "xl"],
     price: "Rp 950.000",
     priceNum: 950000,
     badge: "",
-    images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAbD4-AagZid0aWWpVFo78EmFJQ2Vv8oUdgunfmDBJWmEQ7wrchuA_hyAt5-QNeZBXVXGQbO2bCONq576Uc6bAP0nejhFr00B_ekJUWknjuI3rvuvMCNmEsHrq9ls3QeWy1TlA1l9U6GtuOptXjatFsYNEcw9_Gp1bblxRA3IiTBUb2WUVbZ2LYVNGJnJDrXY04qUN-jVy9lFgVwZh-VOeBLWdm7f7UA-StftttdPRQewbSCrb29_oD",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuApZYjQKy40QS8CtqcB4mzS1EgJzm8fh8pDGTTwiPWxiCTegEwNtNBUkLNrtQXvbnHkZ_gkkK2nNG3my2IBhR9xknL7h5-4qZFgedBlOod5haouN4b3T6nU0FshIGPv5bi-vftrcXRBJd0g29fioMg22jdT0BcgxHtV1WmI_FtMRlhL2CxRVyP47DKcItqM9L-6DLJkx-PWVZrrgAEgdboE9PVSN7CJcStpefaayf00NETTnSgZVFRD",
-    ],
+    images: {
+      primary: getImage("waist_bag1.webp"),
+      detail: getImage("waist_bag_detail.webp"),
+      secondary: [getImage("waist_bag2.webp")],
+    },
   },
 
   {
     id: "5",
-    name: "G-TYPE SHELL JACKET",
+    name: "RUNNING JACKET",
     category: "Outerwear",
-    gender: "men",
-    color: "black",
+    gender: "women",
+    color: ["grey", "pink"],
     sizes: ["m", "l", "xl"],
     price: "Rp 6.750.000",
     priceNum: 6750000,
-    badge: "NEW",
-    images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuASFkvyU4J44Qq3Ksw99mK1xkK-nT0g21yKkypQt4kILilmS3-v_St7AUAKB0aurRGKIk9vSy6_Th_NG77HnUU1aypsvDb3Yc37vQ8nkdX2xQsc1j5MOY4sivnMGzCuTJVjm477MD_xlGaK0hOE_8xYnCf9tHwSr8qexmgnBjq-kRtHh8jhJRocRcHdsfaargibkgn3FNjAlRVX_vGQhw0csbHjAx9okZIZRa2OZJtmZ6-iC86YYFuz",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDEglTZ-cSi88SHwrcVxPBsusumyj8Xr-PJICIHAdlfdhI_FA-U1eZZCVmeTxExjYrTGTRk9L6mfOsiPQT2eTzjt4_veVOStF7fu4nSXRZ91NXyBUH15CJpzqlFoK9CARgsLBJ1SbkK7y8vrTXEAb8j0W06MdojVAQ6zTNJbvEWicTY6E3rUE_QlKkDbRGujWN3lMYly0_G4K5IEqxWwb-OSeSusuQmLvRfuxxCo2PDe4QC2gMIZ8eY",
-    ],
+    badge: "LIMITED",
+    images: {
+      primary: getImage("running_jacket1.webp"),
+      detail: getImage("running_jacket_detail.webp"),
+      secondary: [
+        getImage("running_jacket2.webp"),
+        getImage("running_jacket3.webp"),
+      ],
+    },
   },
 
   {
     id: "6",
-    name: "ARTICULATED CARGO PANT",
+    name: "WOMAN'S TECHNICAL CARGO PANTS",
     category: "Pants",
-    gender: "men",
-    color: "olive",
+    gender: "women",
+    color: ["black", "grey", "beige"],
     sizes: ["s", "m", "l"],
     price: "Rp 4.200.000",
     priceNum: 4200000,
-    badge: "",
-    images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD0IAhv0QBg6_Hy9I1bEy-SN2hUnYtnGa8-gmPT242r1d6bVnE9iNHH5OmL_8BKz_G8S_Gc8v1MshdiNGqVS4GyjGlSVTCx924taDHXO_4y7Y7KGOlQwnChg6YwUeW9uilCjHiJ-oSAgLF8T975wfgBfx5twG9IbTtYMsIhzPq-0lxP2Z8QYDa6LGlBMhS9KNqJ24TnR9a92r4wGk6NvNiRV7OpNCgGVJ217QN5DQczKNxtCeRV2sds",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuC2O-CjtrKGHjzBF8bg0LQNEoNvDnOb3pNmtM5aBV3-eyMKwkwXRiqDIVXcW7Wyro_Meo62wHgS_opF1Rpz4NqP8v63la3QrffGDNIdkzCtvPdFdBsxilZBsP1Ipm0KGHEjt4xFfDqfl9D49BtFZyP8ZGJjWYqJW1z0HHxpAdw2s0nXgZjJ86QnjMK5CIquIRpueJJ0x7g-_sHnzYpad_p-qSK8KaEU2WYVXd0qH-eDgcw1M0FrnzE",
-    ],
+    badge: "FEATURED",
+    images: {
+      primary: getImage("woman's_technical_cargo1.webp"),
+      detail: getImage("woman's_technical_cargo_detail.webp"),
+      secondary: [
+        getImage("woman's_technical_cargo2.webp"),
+        getImage("woman's_technical_cargo3.webp"),
+        getImage("woman's_technical_cargo4.webp"),
+      ],
+    },
   },
 
   {
     id: "7",
-    name: "MERINO TECH LONG SLEEVE",
+    name: "BASIC T-SHIRT",
     category: "Shirts",
-    gender: "women",
-    color: "beige",
+    gender: "unisex",
+    color: ["black", "white", "olive", "beige"],
     sizes: ["xs", "s", "m", "l"],
     price: "Rp 2.400.000",
     priceNum: 2400000,
-    badge: "",
-    images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAVuenzLIWrM3BZji00vurMnxqtXcR2SfMNf12k814TA1ecidcDr3voAsdd0Jj8Sto60AdfflrUIsKBR9j-HkRg6K6pUYWyMA5evPkOTMygyj72rGf3RX55xFaUWlkUwpnbVIrICyoX--5638PHZyRGcnbFhXDsE37chpMG1e6LkcFSO7PAKeRv2cqPXyEgrYUUihXEU9Wd-DzhRGb5SirCtXa6pUhaWwbgR5eVb4AY0UbdPWKcyTb3",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCKNupMBz10eC6Dc1_wVAbOVkNgMXnBMvPUV7nywlcvPzquDG46D6sArTHjGkny0-OoB9jbvVO3Nlc2O79vBOgJgGfL8Gn_Nc-mNkgsWd7I04PjTOG-UoDWTzTTh2dOetYJ_kIZNwCYc_SqHvqLwizo0whJvnXBV-CXW0XC4s_nhUnkg9v_7x8ZmgS5nTEOqLbNWLre4oPswlJDBbSUysmSxoK--7xOiDEruxBMxqIFPv9rekBgCPWu",
-    ],
+    badge: "CORE",
+    images: {
+      primary: getImage("t-shirt1.webp"),
+      detail: getImage("t-shirt_detail.webp"),
+      secondary: [
+        getImage("t-shirt2.webp"),
+        getImage("t-shirt3.webp"),
+        getImage("t-shirt4.webp"),
+        getImage("t-shirt5.webp"),
+        getImage("t-shirt6.webp"),
+      ],
+    },
   },
 
   {
     id: "8",
+    name: "BASIC LONG SLEEVE",
+    category: "Shirts",
+    gender: "unisex",
+    color: ["black", "white", "olive", "beige"],
+    sizes: ["xs", "s", "m", "l"],
+    price: "Rp 2.850.000",
+    priceNum: 2850000,
+    badge: "",
+    images: {
+      primary: getImage("long_sleeve_t-shirt1.webp"),
+      detail: getImage("long_sleeve_t-shirt_detail.webp"),
+      secondary: [
+        getImage("long_sleeve_t-shirt2.webp"),
+        getImage("long_sleeve_t-shirt3.webp"),
+        getImage("long_sleeve_t-shirt4.webp"),
+        getImage("long_sleeve_t-shirt5.webp"),
+        getImage("long_sleeve_t-shirt6.webp"),
+      ],
+    },
+  },
+
+  {
+    id: "9",
     name: "QUILTED MID-LAYER",
     category: "Outerwear",
-    gender: "women",
-    color: "navy",
+    gender: "unisex",
+    color: ["navy", "grey", "beige"],
     sizes: ["s", "m", "l", "xl"],
     price: "Rp 4.800.000",
     priceNum: 4800000,
     badge: "WATER RESISTANT",
-    images: [
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDcZk-cp-GSey_KTtKGxeYhcqvi1x-bpmSWRGN9h9znuOWevGJm-9OwowKhjMD8ULC4wKQTFnHxc3uIFlFcvaiX2Yseq04dY2A6uiqOBAsTDgoGgyhCuU2Pp--etvh967t7g-4kUw_JGTzqENzD40kSJ2W9yi49ZBRp2jLEwbr2OMgK7SeQV2Hgw5paaL_TX91zoMYF7O2LTX_V6tVleY0zpXXpQQU7iLkf9p5-Z_wX6bY9GH_4EOJD",
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAf9CdaqAKUA8hQcB7dpmu30F8shDwztiqCil7TzkTB7nYHSGK-dWw0wEBEtV-TVr3JQp-LS4tCT__PWXU9IBj2uCXUygY-Vr7hlCOrcDFJpUCGYEYq_YTvXs8emQH-d2olLraVRt8hEuLGABYWPZN9yY4JjuCFAmjuLBCzZlSXu2Tm_btZENE-gv3tmnW89GEodaYYHaX-bLrALoyM6tsGhDoUNMKNKCj-Ijgu9LPirq32irratTQ2",
-    ],
+    images: {
+      primary: getImage("mid_layer_jacket1.webp"),
+      detail: getImage("mid_layer_jacket_detail.webp"),
+      secondary: [
+        getImage("mid_layer_jacket2.webp"),
+        getImage("mid_layer_jacket3.webp"),
+        getImage("mid_layer_jacket4.webp"),
+        getImage("mid_layer_jacket5.webp"),
+      ],
+    },
+  },
+
+  {
+    id: "10",
+    name: "WOMEN'S TANK TOP",
+    category: "Shirts",
+    gender: "women",
+    color: ["black", "white", "navy", "grey"],
+    sizes: ["xs", "s", "m", "l"],
+    price: "Rp 1.650.000",
+    priceNum: 1650000,
+    badge: "NEW",
+    images: {
+      primary: getImage("tank_top1.webp"),
+      detail: getImage("tank_top_detail.webp"),
+      secondary: [
+        getImage("tank_top2.webp"),
+        getImage("tank_top3.webp"),
+        getImage("tank_top4.webp"),
+        getImage("tank_top5.webp"),
+      ],
+    },
+  },
+
+  {
+    id: "11",
+    name: "TACTICAL SHIRT",
+    category: "Shirts",
+    gender: "men",
+    color: ["black", "grey", "navy"],
+    sizes: ["xs", "s", "m", "l"],
+    price: "Rp 3.150.000",
+    priceNum: 3150000,
+    badge: "RESTOCKED",
+    images: {
+      primary: getImage("tactical_shirt1.webp"),
+      detail: getImage("tactical_shirt_detail.webp"),
+      secondary: [
+        getImage("tactical_shirt2.webp"),
+        getImage("tactical_shirt3.webp"),
+        getImage("tactical_shirt4.webp"),
+      ],
+    },
+  },
+
+  {
+    id: "12",
+    name: "BELT SYSTEM",
+    category: "Accessories",
+    gender: "men",
+    color: ["black"],
+    sizes: ["xs", "s", "m", "l", "xl"],
+    price: "Rp 875.000",
+    priceNum: 875000,
+    badge: "",
+    images: {
+      primary: getImage("belt1.webp"),
+      detail: getImage("belt_detail.webp"),
+      secondary: [getImage("belt2.webp")],
+    },
+  },
+
+  {
+    id: "13",
+    name: "BACKPACK SYSTEM",
+    category: "Accessories",
+    gender: "unisex",
+    color: ["black", "grey"],
+    sizes: ["xs", "s", "m", "l", "xl"],
+    price: "Rp 3.950.000",
+    priceNum: 3950000,
+    badge: "FEATURED",
+    images: {
+      primary: getImage("backpack1.webp"),
+      detail: getImage("backpack_detail.webp"),
+      secondary: [
+        getImage("backpack2.webp"),
+        getImage("backpack3.webp"),
+        getImage("backpack4.webp"),
+      ],
+    },
+  },
+
+  {
+    id: "14",
+    name: "GIDORA LOW-TOP SNEAKERS BLACK",
+    category: "Accessories",
+    gender: "unisex",
+    color: ["black"],
+    sizes: ["xs", "s", "m", "l", "xl"],
+    price: "Rp 2.750.000",
+    priceNum: 2750000,
+    badge: "NEW",
+    images: {
+      primary: getImage("sneakers_black1.webp"),
+      detail: getImage("sneakers_black_detail.webp"),
+      secondary: [
+        getImage("sneakers_black2.webp"),
+        getImage("sneakers_black3.webp"),
+        getImage("sneakers_black4.webp"),
+      ],
+    },
+  },
+
+  {
+    id: "15",
+    name: "GIDORA LOW-TOP SNEAKERS WHITE",
+    category: "Accessories",
+    gender: "unisex",
+    color: ["white"],
+    sizes: ["xs", "s", "m", "l", "xl"],
+    price: "Rp 2.750.000",
+    priceNum: 2750000,
+    badge: "",
+    images: {
+      primary: getImage("sneakers_white1.webp"),
+      detail: getImage("sneakers_white_detail.webp"),
+      secondary: [
+        getImage("sneakers_white2.webp"),
+        getImage("sneakers_white3.webp"),
+        getImage("sneakers_white4.webp"),
+      ],
+    },
   },
 ];
 
