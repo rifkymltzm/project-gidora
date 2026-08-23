@@ -24,6 +24,26 @@ export default function Navbar() {
     hasTransparentHero && !isScrolled && !isMobileMenuOpen;
 
   // =========================================================
+  // NAVIGATION SCROLL
+  // =========================================================
+
+  const handleNavClick = (event, targetPath) => {
+    setIsMobileMenuOpen(false);
+
+    if (location.pathname !== targetPath) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (window.scrollY > 0) {
+      window.__lenis?.scrollTo(0, {
+        duration: 1.7,
+      });
+    }
+  };
+
+  // =========================================================
   // HERO / SCROLL STATE
   // =========================================================
 
@@ -32,15 +52,15 @@ export default function Navbar() {
 
     const hero = heroId ? document.getElementById(heroId) : null;
 
+    if (!hero) {
+      setIsScrolled(false);
+      return;
+    }
+
     const handleScroll = () => {
-      if (hero) {
-        const heroBottom = hero.getBoundingClientRect().bottom;
+      const heroBottom = hero.getBoundingClientRect().bottom;
 
-        setIsScrolled(heroBottom <= 0);
-        return;
-      }
-
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(heroBottom <= 0);
     };
 
     handleScroll();
@@ -50,11 +70,8 @@ export default function Navbar() {
 
     let resizeObserver;
 
-    if (hero && "ResizeObserver" in window) {
-      resizeObserver = new ResizeObserver(() => {
-        handleScroll();
-      });
-
+    if ("ResizeObserver" in window) {
+      resizeObserver = new ResizeObserver(handleScroll);
       resizeObserver.observe(hero);
     }
 
@@ -106,9 +123,10 @@ export default function Navbar() {
           top-0
           left-0
           z-50
-          h-20
+          h-16
           w-full
           px-margin-mobile
+          md:h-18
           md:px-margin-desktop
           transition-[background-color,border-color,backdrop-filter]
           duration-500
@@ -131,17 +149,18 @@ export default function Navbar() {
             <Link
               to="/"
               className="flex h-full items-center"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(event) => handleNavClick(event, "/")}
             >
               <img
                 src={LogoGidora}
                 alt="GIDORA Logo"
                 className={`
-                  h-[68px]
+                  h-[56px]
                   w-auto
                   object-contain
                   transition-all
                   duration-500
+                  md:h-[68px]
                   ${isTransparentTop ? "brightness-0 invert" : ""}
                 `}
               />
@@ -154,6 +173,7 @@ export default function Navbar() {
 
               <Link
                 to="/about"
+                onClick={(event) => handleNavClick(event, "/about")}
                 className={`
                   group
                   relative
@@ -188,6 +208,7 @@ export default function Navbar() {
 
               <Link
                 to="/products"
+                onClick={(event) => handleNavClick(event, "/products")}
                 className={`
                   group
                   relative
@@ -224,7 +245,7 @@ export default function Navbar() {
               RIGHT: ACTIONS
           ===================================================== */}
 
-          <div className="flex items-center gap-2 md:gap-gutter">
+          <div className="flex items-center gap-1.5 md:gap-gutter">
             {/* SEARCH */}
 
             <button
@@ -241,7 +262,7 @@ export default function Navbar() {
                 ${actionTheme}
               `}
             >
-              <span className="material-symbols-outlined block text-[21px]">
+              <span className="material-symbols-outlined block !text-[21px]">
                 search
               </span>
             </button>
@@ -250,7 +271,10 @@ export default function Navbar() {
 
             <Link
               to="/cart"
-              aria-label={`Shopping bag${totalItems > 0 ? `, ${totalItems} items` : ""}`}
+              onClick={(event) => handleNavClick(event, "/cart")}
+              aria-label={`Shopping bag${
+                totalItems > 0 ? `, ${totalItems} items` : ""
+              }`}
               className={`
                 relative
                 cursor-pointer
@@ -261,7 +285,7 @@ export default function Navbar() {
                 ${actionTheme}
               `}
             >
-              <span className="material-symbols-outlined block text-[21px]">
+              <span className="material-symbols-outlined block !text-[21px]">
                 shopping_bag
               </span>
 
@@ -295,8 +319,8 @@ export default function Navbar() {
               to="/login"
               aria-label="Account"
               className={`
-                cursor-pointer
                 hidden
+                cursor-pointer
                 p-2
                 transition-all
                 duration-300
@@ -305,7 +329,7 @@ export default function Navbar() {
                 ${actionTheme}
               `}
             >
-              <span className="material-symbols-outlined block text-[21px]">
+              <span className="material-symbols-outlined block !text-[21px]">
                 person
               </span>
             </Link>
@@ -327,7 +351,7 @@ export default function Navbar() {
                 ${actionTheme}
               `}
             >
-              <span className="material-symbols-outlined block text-[24px]">
+              <span className="material-symbols-outlined block !text-[24px]">
                 {isMobileMenuOpen ? "close" : "menu"}
               </span>
             </button>
@@ -343,17 +367,17 @@ export default function Navbar() {
             className="
               fixed
               left-0
-              top-20
+              top-16
               z-40
               flex
-              h-[calc(100vh-5rem)]
+              h-[calc(100vh-4rem)]
               w-full
               flex-col
               border-b
               border-border-subtle
               bg-surface
               px-margin-mobile
-              py-8
+              py-1
               animate-[mobileMenuIn_300ms_ease-out]
               md:hidden
             "
@@ -363,6 +387,7 @@ export default function Navbar() {
 
               <Link
                 to="/about"
+                onClick={(event) => handleNavClick(event, "/about")}
                 className={`
                   flex
                   items-center
@@ -383,7 +408,7 @@ export default function Navbar() {
                 <span>About</span>
 
                 {isAboutActive && (
-                  <span className="material-symbols-outlined text-[18px]">
+                  <span className="material-symbols-outlined me-2 !text-[16px]">
                     arrow_forward
                   </span>
                 )}
@@ -393,6 +418,7 @@ export default function Navbar() {
 
               <Link
                 to="/products"
+                onClick={(event) => handleNavClick(event, "/products")}
                 className={`
                   flex
                   items-center
@@ -413,7 +439,7 @@ export default function Navbar() {
                 <span>Collections</span>
 
                 {isCollectionsActive && (
-                  <span className="material-symbols-outlined text-[18px]">
+                  <span className="material-symbols-outlined me-2 !text-[16px]">
                     arrow_forward
                   </span>
                 )}
@@ -437,7 +463,7 @@ export default function Navbar() {
                   hover:text-primary
                 "
               >
-                <span className="material-symbols-outlined text-[20px]">
+                <span className="material-symbols-outlined !text-[20px]">
                   person
                 </span>
                 Sign In / Account

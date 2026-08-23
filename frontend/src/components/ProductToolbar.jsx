@@ -46,7 +46,7 @@ export default function ProductToolbar({
   };
 
   return (
-    <div className="sticky top-20 z-40 w-full border-y border-border-subtle bg-surface/95 backdrop-blur-md">
+    <div className="sticky top-16 md:top-18 z-40 w-full border-y border-border-subtle bg-surface/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-margin-mobile py-3 md:px-margin-desktop md:py-4">
         <button
           type="button"

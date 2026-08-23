@@ -65,10 +65,13 @@ project-gidora/
     │   │   ├── Products.jsx
     │   │   └── Register.jsx
     │   ├── routes/
+    │   │   └── AppRoutes.jsx
     │   ├── services/
     │   ├── utilities/
+    │   │   ├── PageTransition.jsx
     │   │   ├── productFilter.js
-    │   │   └── ScrollToTop.jsx
+    │   │   ├── ScrollToTop.jsx
+    │   │   └── SmoothScroll.jsx
     │   ├── App.jsx
     │   ├── index.css
     │   └── main.jsx

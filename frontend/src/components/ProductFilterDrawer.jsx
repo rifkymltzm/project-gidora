@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+
 import {
   DEFAULT_FILTERS,
   FILTER_OPTIONS,
@@ -13,11 +15,19 @@ export default function ProductFilterDrawer({
 }) {
   const [draftFilters, setDraftFilters] = useState(filters);
 
+  // =========================================================
+  // SYNC DRAFT FILTERS
+  // =========================================================
+
   useEffect(() => {
     if (open) {
       setDraftFilters(filters);
     }
   }, [open, filters]);
+
+  // =========================================================
+  // LOCK BODY SCROLL
+  // =========================================================
 
   useEffect(() => {
     if (!open) {
@@ -25,12 +35,17 @@ export default function ProductFilterDrawer({
     }
 
     const originalOverflow = document.body.style.overflow;
+
     document.body.style.overflow = "hidden";
 
     return () => {
       document.body.style.overflow = originalOverflow;
     };
   }, [open]);
+
+  // =========================================================
+  // ESCAPE TO CLOSE
+  // =========================================================
 
   useEffect(() => {
     if (!open) {
@@ -50,11 +65,19 @@ export default function ProductFilterDrawer({
     };
   }, [open, onClose]);
 
+  // =========================================================
+  // CLOSED STATE
+  // =========================================================
+
   if (!open) {
     return null;
   }
 
   const activeCount = getActiveFilterCount(draftFilters);
+
+  // =========================================================
+  // FILTER ACTIONS
+  // =========================================================
 
   const updateFilter = (key, value) => {
     setDraftFilters((current) => ({
@@ -72,22 +95,72 @@ export default function ProductFilterDrawer({
     onClose();
   };
 
-  return (
+  // =========================================================
+  // DRAWER
+  // =========================================================
+
+  return createPortal(
     <div className="fixed inset-0 z-[100]">
+      {/* =====================================================
+          BACKDROP
+      ===================================================== */}
+
       <button
         type="button"
         aria-label="Close filters"
         onClick={onClose}
-        className="absolute inset-0 h-full w-full cursor-default bg-primary/25 backdrop-blur-[2px]"
+        className="
+          absolute
+          inset-0
+          h-full
+          w-full
+          cursor-default
+          bg-primary/25
+          backdrop-blur-[2px]
+        "
       />
 
+      {/* =====================================================
+          DRAWER
+      ===================================================== */}
+
       <aside
-        className="absolute inset-0 flex h-full w-full flex-col bg-surface shadow-[0_-10px_50px_rgba(0,0,0,0.12)] md:left-auto md:right-0 md:top-0 md:h-full md:w-[440px] md:shadow-[-20px_0_60px_rgba(0,0,0,0.10)]"
+        className="
+          absolute
+          inset-0
+          flex
+          h-full
+          w-full
+          flex-col
+          bg-surface
+          shadow-[0_-10px_50px_rgba(0,0,0,0.12)]
+          md:left-auto
+          md:right-0
+          md:top-0
+          md:h-full
+          md:w-[440px]
+          md:shadow-[-20px_0_60px_rgba(0,0,0,0.10)]
+        "
         role="dialog"
         aria-modal="true"
         aria-label="Product filters"
       >
-        <header className="border-b border-border-subtle px-6 pb-5 pt-6 md:px-8 md:pt-8">
+        {/* ===================================================
+            HEADER
+        =================================================== */}
+
+        <header
+          className="
+            shrink-0
+            border-b
+            border-border-subtle
+            px-6
+            pb-5
+            pt-6
+            md:px-8
+            md:pt-8
+          "
+        >
           <div className="mb-5 flex items-start justify-between">
             <div>
               <p className="mb-2 font-label-caps text-text-muted">
@@ -103,7 +176,20 @@ export default function ProductFilterDrawer({
               type="button"
               onClick={onClose}
               aria-label="Close filters"
-              className="flex h-9 w-9 cursor-pointer items-center justify-center border border-border-subtle text-text-muted transition-colors hover:border-primary hover:text-primary"
+              className="
+                flex
+                h-9
+                w-9
+                cursor-pointer
+                items-center
+                justify-center
+                border
+                border-border-subtle
+                text-text-muted
+                transition-colors
+                hover:border-primary
+                hover:text-primary
+              "
             >
               <span className="material-symbols-outlined text-[18px]">
                 close
@@ -122,7 +208,13 @@ export default function ProductFilterDrawer({
               <button
                 type="button"
                 onClick={clearFilters}
-                className="cursor-pointer font-label-caps text-text-muted transition-colors hover:text-primary"
+                className="
+                  cursor-pointer
+                  font-label-caps
+                  text-text-muted
+                  transition-colors
+                  hover:text-primary
+                "
               >
                 CLEAR ALL
               </button>
@@ -130,7 +222,22 @@ export default function ProductFilterDrawer({
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto">
+        {/* ===================================================
+            FILTER CONTENT
+            NATIVE SCROLL
+            LENIS PREVENTED
+        =================================================== */}
+
+        <div
+          data-lenis-prevent
+          className="
+            min-h-0
+            flex-1
+            overflow-y-auto
+            overscroll-contain
+            touch-pan-y
+          "
+        >
           {Object.entries(FILTER_OPTIONS).map(([key, options]) => (
             <FilterSection
               key={key}
@@ -142,11 +249,37 @@ export default function ProductFilterDrawer({
           ))}
         </div>
 
-        <footer className="border-t border-border-subtle bg-surface p-4 md:p-6">
+        {/* ===================================================
+            FOOTER
+        =================================================== */}
+
+        <footer
+          className="
+            shrink-0
+            border-t
+            border-border-subtle
+            bg-surface
+            p-4
+            md:p-6
+          "
+        >
           <button
             type="button"
             onClick={handleApply}
-            className="flex w-full cursor-pointer items-center justify-between bg-primary px-5 py-4 font-label-caps text-on-primary transition-colors hover:bg-surface-tint"
+            className="
+              flex
+              w-full
+              cursor-pointer
+              items-center
+              justify-between
+              bg-primary
+              px-5
+              py-4
+              font-label-caps
+              text-on-primary
+              transition-colors
+              hover:bg-surface-tint
+            "
           >
             <span>APPLY FILTERS</span>
 
@@ -156,9 +289,14 @@ export default function ProductFilterDrawer({
           </button>
         </footer>
       </aside>
-    </div>
+    </div>,
+    document.body,
   );
 }
+
+// =============================================================
+// FILTER SECTION
+// =============================================================
 
 function FilterSection({ label, value, options, onChange }) {
   const selectedLabel =
@@ -183,11 +321,22 @@ function FilterSection({ label, value, options, onChange }) {
               key={optionValue}
               type="button"
               onClick={() => onChange(optionValue)}
-              className={`min-w-[52px] cursor-pointer border px-4 py-2.5 font-label-caps uppercase tracking-wide transition-all ${
-                selected
-                  ? "border-primary bg-primary text-on-primary"
-                  : "border-border-subtle bg-surface text-text-muted hover:border-primary hover:text-primary"
-              }`}
+              className={`
+                min-w-[52px]
+                cursor-pointer
+                border
+                px-4
+                py-2.5
+                font-label-caps
+                uppercase
+                tracking-wide
+                transition-all
+                ${
+                  selected
+                    ? "border-primary bg-primary text-on-primary"
+                    : "border-border-subtle bg-surface text-text-muted hover:border-primary hover:text-primary"
+                }
+              `}
             >
               {optionLabel}
             </button>
@@ -197,6 +346,10 @@ function FilterSection({ label, value, options, onChange }) {
     </section>
   );
 }
+
+// =============================================================
+// HELPERS
+// =============================================================
 
 function capitalize(value) {
   return value.charAt(0).toUpperCase() + value.slice(1);

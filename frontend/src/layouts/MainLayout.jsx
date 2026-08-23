@@ -1,7 +1,6 @@
-import { Outlet } from "react-router-dom";
-
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PageTransition from "../utilities/PageTransition";
 
 export default function MainLayout() {
   return (
@@ -9,7 +8,7 @@ export default function MainLayout() {
       <Navbar />
 
       <main className="flex-1">
-        <Outlet />
+        <PageTransition />
       </main>
 
       <Footer />

@@ -142,7 +142,7 @@ export default function ProductDetail() {
 
   return (
     <div className="min-h-[70vh] w-full flex-grow bg-surface">
-      <main className="mx-auto max-w-screen-2xl px-margin-mobile pb-20 pt-28 md:px-margin-desktop md:pt-32">
+      <main className="mx-auto max-w-screen-2xl px-margin-mobile pb-20 pt-22 md:px-margin-desktop md:pt-28">
         {/* =========================================================
            MOBILE BACK NAVIGATION
         ========================================================= */}
@@ -150,7 +150,7 @@ export default function ProductDetail() {
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="mb-6 flex items-center gap-1.5 font-technical-data uppercase tracking-wide text-text-muted transition-colors duration-300 hover:text-primary md:hidden"
+          className="mb-6 flex items-center gap-1.5 font-label-caps uppercase tracking-wide text-text-muted transition-colors duration-300 hover:text-primary md:hidden"
         >
           <span
             className="material-symbols-outlined"
@@ -207,7 +207,7 @@ function Breadcrumb({ product }) {
     <div className="mb-8 hidden items-center gap-2 md:flex">
       <Link
         to="/products"
-        className="font-technical-data uppercase tracking-wide text-text-muted transition-colors duration-300 hover:text-primary"
+        className="font-label-caps tracking-wide text-text-muted transition-colors duration-300 hover:text-primary"
       >
         Collections
       </Link>
@@ -221,7 +221,7 @@ function Breadcrumb({ product }) {
 
       <Link
         to={`/products?category=${category}`}
-        className="font-technical-data uppercase tracking-wide text-primary transition-colors duration-300 hover:text-text-muted"
+        className="font-label-caps tracking-wide text-primary transition-colors duration-300 hover:text-text-muted"
       >
         {product.category}
       </Link>
@@ -485,28 +485,33 @@ function ProductGallery({
 }) {
   return (
     <div className="lg:col-span-6">
-      {/* Desktop */}
-      <div className="hidden md:flex md:flex-row md:gap-4">
-        <div className="no-scrollbar flex w-24 shrink-0 flex-col gap-4 overflow-y-auto">
-          {images.map((image, index) => (
-            <GalleryThumbnail
-              key={`${image}-${index}`}
-              image={image}
-              productName={product.name}
-              index={index}
-              active={index === activeImageIndex}
-              onClick={() => onGoToImage(index)}
-            />
-          ))}
+      {/* =====================================================
+         DESKTOP
+      ===================================================== */}
+      <div className="hidden md:flex md:items-start md:gap-4">
+        {/* Thumbnail Column */}
+        <div className="w-24 shrink-0 self-stretch overflow-y-auto">
+          <div className="flex flex-col gap-4">
+            {images.map((image, index) => (
+              <GalleryThumbnail
+                key={`${image}-${index}`}
+                image={image}
+                productName={product.name}
+                index={index}
+                active={index === activeImageIndex}
+                onClick={() => onGoToImage(index)}
+              />
+            ))}
+          </div>
         </div>
 
+        {/* Main Image */}
         <div className="group relative aspect-square min-w-0 flex-1 overflow-hidden border border-border-subtle bg-surface-container-low">
           {activeImage && (
             <img
-              key={activeImage}
               src={activeImage}
               alt={product.name}
-              className="absolute inset-0 h-auto w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.015]"
+              className="block h-full w-full object-contain object-center transition-transform duration-700 ease-out group-hover:scale-[1.015]"
             />
           )}
 
@@ -531,7 +536,9 @@ function ProductGallery({
         </div>
       </div>
 
-      {/* Mobile */}
+      {/* =====================================================
+         MOBILE
+      ===================================================== */}
       <div className="md:hidden">
         <div
           ref={mobileCarouselRef}
@@ -548,7 +555,7 @@ function ProductGallery({
                 <img
                   src={image}
                   alt={`${product.name} ${index + 1}`}
-                  className="absolute inset-0 h-full w-full object-cover"
+                  className="block h-full w-full object-contain object-center"
                 />
               </div>
             </div>
@@ -587,7 +594,7 @@ function GalleryThumbnail({ image, productName, index, active, onClick }) {
       <img
         src={image}
         alt={`${productName} ${index + 1}`}
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+        className="block h-full w-full object-contain object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
       />
     </button>
   );

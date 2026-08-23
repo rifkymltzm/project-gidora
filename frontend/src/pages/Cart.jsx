@@ -13,7 +13,7 @@ export default function Cart() {
 
   return (
     <div className="min-h-[70vh] w-full bg-background">
-      <main className="mx-auto max-w-screen-2xl px-margin-mobile pb-20 pt-28 md:px-margin-desktop md:pt-32">
+      <main className="mx-auto max-w-screen-2xl px-margin-mobile pb-20 pt-26 md:px-margin-desktop md:pt-30">
         {/* =========================================================
            HEADER
         ========================================================= */}
@@ -186,7 +186,9 @@ function CartSummary({ subtotal }) {
         {/* Price Details */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <span className="font-label-caps text-text-muted">SUBTOTAL</span>
+            <span className="font-technical-data text-text-muted">
+              SUBTOTAL
+            </span>
 
             <span className="font-technical-data text-primary">
               {formatPrice(subtotal)}
@@ -194,9 +196,11 @@ function CartSummary({ subtotal }) {
           </div>
 
           <div className="flex items-start justify-between gap-6">
-            <span className="font-label-caps text-text-muted">SHIPPING</span>
+            <span className="font-technical-data text-text-muted">
+              SHIPPING
+            </span>
 
-            <span className="text-right font-technical-data text-text-muted">
+            <span className="text-right font-technical-data text-[11px] text-text-muted">
               CALCULATED AT NEXT STEP
             </span>
           </div>
@@ -205,24 +209,73 @@ function CartSummary({ subtotal }) {
         {/* Total */}
         <div className="mt-7 border-t border-border-subtle pt-5">
           <div className="flex items-end justify-between gap-4">
-            <span className="font-label-caps text-primary">TOTAL</span>
+            <span className="font-technical-data font-bold text-[15px] text-text-muted">
+              TOTAL
+            </span>
 
-            <span className="font-body-lg text-primary">
+            <span className="font-technical-data font-bold font-bold text-[15px] text-primary">
               {formatPrice(subtotal)}
             </span>
           </div>
         </div>
 
+        {/* SUBMIT */}
+
+        {/* <button
+                  type="submit"
+                  className="
+                    group
+                    flex
+                    w-full
+                    items-center
+                    justify-center
+                    gap-1
+                    border
+                    border-primary
+                    bg-primary
+                    px-6
+                    py-3.5
+                    font-label-caps
+                    text-on-primary
+                    transition-all
+                    duration-300
+                    hover:bg-transparent
+                    hover:text-primary
+                  "
+                >
+                  SIGN IN
+                  <span className="material-symbols-outlined ml-1 !text-[15px] transition-transform duration-300 group-hover:translate-x-1">
+                    arrow_forward
+                  </span>
+                </button> */}
+
         {/* Actions */}
         <div className="mt-8 space-y-3">
           <button
-            type="button"
-            className="flex w-full cursor-pointer items-center justify-between bg-primary px-5 py-4 font-label-caps tracking-widest text-on-primary transition-colors duration-300 hover:bg-surface-tint"
+            type="submit"
+            className="
+              cursor-pointer
+              group
+              flex
+              w-full
+              items-center
+              justify-center
+              gap-1
+              bg-primary
+              px-6
+              py-4
+              font-label-caps
+              text-on-primary
+              transition-all
+              duration-300
+              hover:bg-surface-tint
+              hover:text-white
+            "
           >
             <span>CHECKOUT</span>
 
             <span
-              className="material-symbols-outlined"
+              className="material-symbols-outlined ml-1 !text-[15px] transition-transform duration-300 group-hover:translate-x-1"
               style={{ fontSize: "16px" }}
             >
               arrow_forward

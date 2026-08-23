@@ -72,7 +72,7 @@ export default function Products() {
     <div className="min-h-[70vh] w-full bg-surface">
       {/* HEADER */}
 
-      <header className="mx-auto flex max-w-7xl flex-col gap-4 px-margin-mobile pb-10 pt-28 md:flex-row md:items-end md:justify-between md:px-margin-desktop md:pb-14 md:pt-32">
+      <header className="mx-auto flex max-w-7xl flex-col gap-4 px-margin-mobile pb-10 pt-26 md:flex-row md:items-end md:justify-between md:px-margin-desktop md:pb-14 md:pt-30">
         <div>
           <p className="mb-3 font-label-caps tracking-[0.18em] text-text-muted">
             GIDORA / COLLECTION
