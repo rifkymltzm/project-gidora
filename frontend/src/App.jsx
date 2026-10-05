@@ -1,10 +1,10 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 
-import AppRoutes from "./routes/AppRoutes";
-import CartProvider from "./contexts/CartContext";
+import AppRoutes from './routes/AppRoutes';
+import CartProvider from './features/cart/context/CartContext';
 
-import SmoothScroll from "./utilities/SmoothScroll";
-import ScrollToTop from "./utilities/ScrollToTop";
+import SmoothScroll from './utils/SmoothScroll';
+import ScrollToTop from './utils/ScrollToTop';
 
 export default function App() {
   return (

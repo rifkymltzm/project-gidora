@@ -1,6 +1,6 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import PageTransition from "../utilities/PageTransition";
+import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
+import PageTransition from '../utils/PageTransition';
 
 export default function MainLayout() {
   return (

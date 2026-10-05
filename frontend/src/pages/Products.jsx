@@ -1,17 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import ProductFilterDrawer from "../components/ProductFilterDrawer";
-import ProductGrid from "../components/ProductGrid";
-import ProductToolbar from "../components/ProductToolbar";
-import PRODUCTS_DATA from "../data/products";
+import ProductFilterDrawer from '../features/products/components/ProductFilterDrawer';
+import ProductGrid from '../features/products/components/ProductGrid';
+import ProductToolbar from '../features/products/components/ProductToolbar';
+import PRODUCTS_DATA from '../features/products/data/products';
 
 import {
   DEFAULT_FILTERS,
   getActiveFilterCount,
   getFilteredProducts,
   normalizeValue,
-} from "../utilities/productFilters";
+} from '../features/products/utils/productFilters';
 
 const INITIAL_LIMIT = 8;
 const LOAD_MORE_AMOUNT = 4;
@@ -19,11 +19,9 @@ const LOAD_MORE_AMOUNT = 4;
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [filters, setFilters] = useState(() =>
-    getFiltersFromSearchParams(searchParams),
-  );
+  const [filters, setFilters] = useState(() => getFiltersFromSearchParams(searchParams));
 
-  const [sortBy, setSortBy] = useState("featured");
+  const [sortBy, setSortBy] = useState('featured');
   const [limit, setLimit] = useState(INITIAL_LIMIT);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -46,8 +44,8 @@ export default function Products() {
 
     const params = new URLSearchParams(searchParams);
 
-    updateParam(params, "category", newFilters.category);
-    updateParam(params, "gender", newFilters.gender);
+    updateParam(params, 'category', newFilters.category);
+    updateParam(params, 'gender', newFilters.gender);
 
     setSearchParams(params);
   };
@@ -59,7 +57,7 @@ export default function Products() {
 
   const resetFilters = () => {
     setFilters(DEFAULT_FILTERS);
-    setSortBy("featured");
+    setSortBy('featured');
     setLimit(INITIAL_LIMIT);
     setSearchParams({});
   };
@@ -69,20 +67,20 @@ export default function Products() {
   };
 
   return (
-    <div className="min-h-[70vh] w-full bg-surface">
+    <div className="bg-surface min-h-[70vh] w-full">
       {/* HEADER */}
 
-      <header className="mx-auto flex max-w-7xl flex-col gap-4 px-margin-mobile pb-10 pt-26 md:flex-row md:items-end md:justify-between md:px-margin-desktop md:pb-14 md:pt-30">
+      <header className="px-margin-mobile md:px-margin-desktop mx-auto flex max-w-7xl flex-col gap-4 pt-26 pb-10 md:flex-row md:items-end md:justify-between md:pt-30 md:pb-14">
         <div>
-          <p className="mb-3 font-label-caps tracking-[0.18em] text-text-muted">
+          <p className="font-label-caps text-text-muted mb-3 tracking-[0.18em]">
             GIDORA / COLLECTION
           </p>
 
-          <h1 className="font-headline-display uppercase text-primary">SHOP</h1>
+          <h1 className="font-headline-display text-primary uppercase">SHOP</h1>
         </div>
 
         <div className="font-technical-data text-text-muted">
-          {String(filteredProducts.length).padStart(2, "0")} PRODUCTS
+          {String(filteredProducts.length).padStart(2, '0')} PRODUCTS
         </div>
       </header>
 
@@ -98,23 +96,23 @@ export default function Products() {
 
       {/* PRODUCTS */}
 
-      <section className="mx-auto max-w-7xl px-margin-mobile py-8 md:px-margin-desktop md:py-12">
+      <section className="px-margin-mobile md:px-margin-desktop mx-auto max-w-7xl py-8 md:py-12">
         <ProductGrid products={visibleProducts} />
 
         {/* EMPTY STATE */}
 
         {filteredProducts.length === 0 && (
-          <div className="flex min-h-[280px] flex-col items-center justify-center border-y border-border-subtle">
+          <div className="border-border-subtle flex min-h-[280px] flex-col items-center justify-center border-y">
             <p className="font-label-caps text-text-muted">NO PRODUCTS FOUND</p>
 
-            <p className="mt-2 text-center font-body-md text-text-muted">
+            <p className="font-body-md text-text-muted mt-2 text-center">
               Tidak ada produk yang sesuai dengan filter saat ini.
             </p>
 
             <button
               type="button"
               onClick={resetFilters}
-              className="mt-6 border border-primary px-6 py-3 font-label-caps text-primary transition-colors duration-300 hover:bg-primary hover:text-on-primary"
+              className="border-primary font-label-caps text-primary hover:bg-primary hover:text-on-primary mt-6 border px-6 py-3 transition-colors duration-300"
             >
               RESET FILTERS
             </button>
@@ -124,11 +122,11 @@ export default function Products() {
         {/* LOAD MORE */}
 
         {visibleProducts.length < filteredProducts.length && (
-          <div className="flex w-full justify-center py-section-gap">
+          <div className="py-section-gap flex w-full justify-center">
             <button
               type="button"
               onClick={handleLoadMore}
-              className="w-full max-w-xs bg-primary px-12 py-4 font-label-caps text-on-primary transition-colors duration-300 hover:bg-surface-tint"
+              className="bg-primary font-label-caps text-on-primary hover:bg-surface-tint w-full max-w-xs cursor-pointer px-12 py-4 transition-colors duration-300"
             >
               LOAD MORE
             </button>
@@ -151,18 +149,18 @@ export default function Products() {
 function getFiltersFromSearchParams(searchParams) {
   return {
     ...DEFAULT_FILTERS,
-    category: getUrlFilter(searchParams, "category"),
-    gender: getUrlFilter(searchParams, "gender"),
+    category: getUrlFilter(searchParams, 'category'),
+    gender: getUrlFilter(searchParams, 'gender'),
   };
 }
 
 function getUrlFilter(searchParams, key) {
   const value = searchParams.get(key);
-  return value ? normalizeValue(value) : "all";
+  return value ? normalizeValue(value) : 'all';
 }
 
 function updateParam(params, key, value) {
-  if (value === "all") {
+  if (value === 'all') {
     params.delete(key);
     return;
   }
