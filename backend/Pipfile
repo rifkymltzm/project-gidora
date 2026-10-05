@@ -6,18 +6,44 @@ name = "pypi"
 [packages]
 django = "*"
 djangorestframework = "*"
-djoser = "*"
 djangorestframework-simplejwt = "*"
+djoser = "*"
+drf-spectacular = "*"
 django-cors-headers = "*"
 psycopg2-binary = "*"
-celery = "*"
-redis = "*"
-yfinance = "*"
-requests = "*"
 python-decouple = "*"
 dj-database-url = "*"
+midtransclient = "*"
+Pillow = "*"
+django-filter = "*"
+requests = "*"
+cryptography = "*"
 
 [dev-packages]
+black = "*"
+ruff = "*"
+pytest = "*"
+pytest-django = "*"
 
 [requires]
 python_version = "3.12"
+
+[scripts]
+# --- Django Core ---
+server = "python manage.py runserver"
+makemigrations = "python manage.py makemigrations"
+migrate = "python manage.py migrate"
+check = "python manage.py check"
+shell = "python manage.py shell"
+superuser = "python manage.py createsuperuser"
+flush = "python manage.py flush"
+
+# --- DRF Spectacular ---
+schema = "python manage.py spectacular --file schema.yml --validate"
+
+# --- Testing & Code Quality ---
+test = "pytest"
+format = "black ."
+format-check = "black --check ."
+lint = "ruff check ."
+lint-fix = "ruff check . --fix"

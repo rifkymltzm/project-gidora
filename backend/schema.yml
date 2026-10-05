@@ -1,0 +1,6693 @@
+openapi: 3.0.3
+info:
+  title: GIDORA API
+  version: 1.0.0
+  description: Backend API for GIDORA e-commerce
+paths:
+  /api/v1/auth/users/:
+    get:
+      operationId: v1_auth_users_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - Accounts
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedUserList'
+          description: ''
+    post:
+      operationId: v1_auth_users_create
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreate'
+          description: ''
+  /api/v1/auth/users/activation/:
+    post:
+      operationId: v1_auth_users_activation_create
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Activation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Activation'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activation'
+          description: ''
+  /api/v1/auth/users/me/:
+    patch:
+      operationId: v1_auth_users_me_partial_update
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: v1_auth_users_me_update
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    get:
+      operationId: v1_auth_users_me_retrieve
+      tags:
+      - Accounts
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: v1_auth_users_me_destroy
+      tags:
+      - Accounts
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/auth/users/resend_activation/:
+    post:
+      operationId: v1_auth_users_resend_activation_create
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /api/v1/auth/users/reset_password/:
+    post:
+      operationId: v1_auth_users_reset_password_create
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /api/v1/auth/users/reset_password_confirm/:
+    post:
+      operationId: v1_auth_users_reset_password_confirm_create
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResetConfirm'
+          description: ''
+  /api/v1/auth/users/reset_email/:
+    post:
+      operationId: v1_auth_users_reset_email_create
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /api/v1/auth/users/reset_email_confirm/:
+    post:
+      operationId: v1_auth_users_reset_email_confirm_create
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameResetConfirm'
+          description: ''
+  /api/v1/auth/users/set_password/:
+    post:
+      operationId: v1_auth_users_set_password_create
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetPassword'
+          description: ''
+  /api/v1/auth/users/set_email/:
+    post:
+      operationId: v1_auth_users_set_email_create
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetUsername'
+          description: ''
+  /api/v1/auth/users/{id}/:
+    patch:
+      operationId: v1_auth_users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: v1_auth_users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    get:
+      operationId: v1_auth_users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Accounts
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: v1_auth_users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Accounts
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/auth/jwt/create/:
+    post:
+      operationId: v1_auth_jwt_create_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/v1/auth/jwt/refresh/:
+    post:
+      operationId: v1_auth_jwt_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/v1/auth/jwt/verify/:
+    post:
+      operationId: v1_auth_jwt_verify_create
+      description: |-
+        Takes a token and indicates if it is valid.  This view provides no
+        information about a token's fitness for a particular use.
+      tags:
+      - Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerify'
+          description: ''
+  /api/v1/accounts/addresses/:
+    get:
+      operationId: v1_accounts_addresses_list
+      description: |-
+        Mengambil seluruh alamat milik user yang sedang login.
+
+        Endpoint ini hanya mengembalikan alamat milik user tersebut. Alamat milik user lain tidak dapat diakses.
+      summary: List my addresses
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - User Addresses
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAddressList'
+          description: Daftar alamat milik user.
+        '401':
+          description: Authentication diperlukan.
+    post:
+      operationId: v1_accounts_addresses_create
+      description: |-
+        Membuat alamat baru untuk user yang sedang login.
+
+        Field `user` tidak perlu dikirim karena user diambil secara otomatis dari JWT authentication.
+      summary: Create address
+      tags:
+      - User Addresses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+            examples:
+              CreateAddress:
+                value:
+                  label: Home
+                  recipient_name: GIDORA Customer
+                  phone_number: 081234567890
+                  address_line: Jl. Contoh No. 123
+                  sub_district: Kebayoran Baru
+                  district: Jakarta Selatan
+                  city: Jakarta Selatan
+                  province: DKI Jakarta
+                  postal_code: '12190'
+                  country: Indonesia
+                summary: Create address
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Address'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Address'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: Alamat berhasil dibuat.
+        '400':
+          description: Data alamat tidak valid.
+        '401':
+          description: Authentication diperlukan.
+  /api/v1/accounts/addresses/{id}/:
+    patch:
+      operationId: v1_accounts_addresses_partial_update
+      description: Mengubah sebagian field dari alamat milik user yang sedang login.
+      summary: Partially update my address
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this address.
+        required: true
+      tags:
+      - User Addresses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAddress'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAddress'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: Alamat berhasil diperbarui.
+        '400':
+          description: Data alamat tidak valid.
+        '401':
+          description: Authentication diperlukan.
+        '404':
+          description: Alamat tidak ditemukan.
+    put:
+      operationId: v1_accounts_addresses_update
+      description: |-
+        Mengganti seluruh data alamat milik user yang sedang login.
+
+        Gunakan `PATCH` jika hanya ingin mengubah sebagian field.
+      summary: Replace my address
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this address.
+        required: true
+      tags:
+      - User Addresses
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Address'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Address'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: Alamat berhasil diperbarui.
+        '400':
+          description: Data alamat tidak valid.
+        '401':
+          description: Authentication diperlukan.
+        '404':
+          description: Alamat tidak ditemukan.
+    get:
+      operationId: v1_accounts_addresses_retrieve
+      description: |-
+        Mengambil detail satu alamat milik user yang sedang login.
+
+        Jika address ID bukan milik user tersebut, API akan mengembalikan 404.
+      summary: Get my address
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this address.
+        required: true
+      tags:
+      - User Addresses
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: Detail alamat.
+        '401':
+          description: Authentication diperlukan.
+        '404':
+          description: Alamat tidak ditemukan.
+    delete:
+      operationId: v1_accounts_addresses_destroy
+      description: |-
+        Menghapus alamat milik user yang sedang login.
+
+        Pastikan alamat tersebut tidak sedang digunakan oleh proses checkout yang aktif.
+      summary: Delete my address
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this address.
+        required: true
+      tags:
+      - User Addresses
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Alamat berhasil dihapus.
+        '401':
+          description: Authentication diperlukan.
+        '404':
+          description: Alamat tidak ditemukan.
+  /api/v1/catalog/products/:
+    get:
+      operationId: v1_catalog_products_list
+      description: |-
+        Returns active products for the storefront. Products can be filtered by category, gender, size type, badge, color, and size. Results can also be searched and sorted by name, date, or minimum active variant price.
+
+        Each active product variant also includes `available`, which represents the quantity currently available for purchase (`stock_on_hand - reserved`). If no inventory record exists for a variant, `available` is returned as `0`.
+      summary: List products
+      parameters:
+      - in: query
+        name: badge
+        schema:
+          type: string
+        description: Filter products by badge. Badge values are managed as product
+          data.
+      - in: query
+        name: category
+        schema:
+          type: string
+        description: Filter products by category code. Use a category code returned
+          by `GET /api/v1/catalog/categories/`.
+      - in: query
+        name: color
+        schema:
+          type: string
+        description: Filter products by color code. Use a color code returned by `GET
+          /api/v1/catalog/colors/`.
+      - in: query
+        name: gender
+        schema:
+          type: string
+          enum:
+          - men
+          - unisex
+          - women
+        description: Filter products by gender.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -created_at
+          - -name
+          - -price
+          - -updated_at
+          - created_at
+          - name
+          - price
+          - updated_at
+        description: Sort products by name, creation date, update date, or minimum
+          active variant price. Prefix the field with `-` for descending order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by product name, product code, description, material,
+          category name, or color name.
+      - in: query
+        name: size
+        schema:
+          type: string
+        description: Filter products by size name. Available sizes can be retrieved
+          from `GET /api/v1/catalog/sizes/`.
+      - in: query
+        name: size_type
+        schema:
+          type: string
+          enum:
+          - APPAREL
+          - FOOTWEAR
+          - ONE_SIZE
+        description: Filter products by size type.
+      tags:
+      - Catalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductList'
+          description: List of active products.
+  /api/v1/catalog/products/{id}/:
+    get:
+      operationId: v1_catalog_products_retrieve
+      description: |-
+        Returns one active product including its category, size type, active colors, active variants, and product images.
+
+        Each active product variant includes `available`, representing the quantity currently available for purchase. If no inventory record exists, `available` is returned as `0`.
+      summary: Retrieve product detail
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - Catalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+          description: Product detail.
+        '404':
+          description: Product not found or inactive.
+  /api/v1/catalog/categories/:
+    get:
+      operationId: v1_catalog_categories_list
+      description: Returns all active product categories available for the storefront.
+        Use a category code returned by this endpoint when filtering products by category.
+      summary: List active categories
+      parameters:
+      - in: query
+        name: code
+        schema:
+          type: string
+        description: Filter by category code. Use a category code returned by `GET
+          /api/v1/catalog/categories/`.
+      - in: query
+        name: default_size_type
+        schema:
+          type: integer
+        description: Filter by default SizeType primary key.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -code
+          - -name
+          - code
+          - name
+        description: Sort by category name or code. Prefix the field with `-` for
+          descending order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by category name or category code.
+      tags:
+      - Catalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCategoryList'
+          description: List of active categories.
+  /api/v1/catalog/categories/{id}/:
+    get:
+      operationId: v1_catalog_categories_retrieve
+      description: Returns one active category by ID, including its default size type.
+      summary: Retrieve category
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - Catalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+          description: Category detail.
+        '404':
+          description: Category not found or inactive.
+  /api/v1/catalog/size-types/:
+    get:
+      operationId: v1_catalog_size_types_list
+      description: Returns all active size types available for the storefront. Use
+        the `code` filter when a specific size type is needed.
+      summary: List active size types
+      parameters:
+      - in: query
+        name: code
+        schema:
+          type: string
+          enum:
+          - APPAREL
+          - FOOTWEAR
+          - ONE_SIZE
+        description: Filter by size type code. Available values are `APPAREL`, `FOOTWEAR`,
+          and `ONE_SIZE`.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -code
+          - -name
+          - code
+          - name
+        description: Sort by size type name or code. Prefix the field with `-` for
+          descending order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by size type name or code.
+      tags:
+      - Catalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSizeTypeList'
+          description: List of active size types.
+  /api/v1/catalog/size-types/{id}/:
+    get:
+      operationId: v1_catalog_size_types_retrieve
+      description: Returns one active size type by ID.
+      summary: Retrieve size type
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this size type.
+        required: true
+      tags:
+      - Catalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SizeType'
+          description: Size type detail.
+        '404':
+          description: Size type not found or inactive.
+  /api/v1/catalog/sizes/:
+    get:
+      operationId: v1_catalog_sizes_list
+      description: Returns all active sizes available for the storefront. Sizes can
+        be filtered by size type and searched by size name or size type name. Use
+        this endpoint as the source of available size values when a specific size
+        is required.
+      summary: List active sizes
+      parameters:
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -name
+          - -sort_order
+          - name
+          - sort_order
+        description: Sort by `sort_order` or `name`. Prefix the field with `-` for
+          descending order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by size name or size type name.
+      - in: query
+        name: size_type
+        schema:
+          type: integer
+        description: Filter by SizeType primary key.
+      - in: query
+        name: size_type__code
+        schema:
+          type: string
+        description: Filter by size type code. Use a code returned by `GET /api/v1/catalog/size-types/`.
+      tags:
+      - Catalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSizeList'
+          description: List of active sizes.
+  /api/v1/catalog/sizes/{id}/:
+    get:
+      operationId: v1_catalog_sizes_retrieve
+      description: Returns one active size by ID, including its size type.
+      summary: Retrieve size
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this size.
+        required: true
+      tags:
+      - Catalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Size'
+          description: Size detail.
+        '404':
+          description: Size not found or inactive.
+  /api/v1/catalog/colors/:
+    get:
+      operationId: v1_catalog_colors_list
+      description: Returns all active colors available for the storefront. Use a color
+        code returned by this endpoint when filtering products by color.
+      summary: List active colors
+      parameters:
+      - in: query
+        name: code
+        schema:
+          type: string
+        description: Filter by color code. Use a color code returned by `GET /api/v1/catalog/colors/`.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -code
+          - -name
+          - code
+          - name
+        description: Sort by color name or code. Prefix the field with `-` for descending
+          order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by color name or color code.
+      tags:
+      - Catalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedColorList'
+          description: List of active colors.
+  /api/v1/catalog/colors/{id}/:
+    get:
+      operationId: v1_catalog_colors_retrieve
+      description: Returns one active color by ID.
+      summary: Retrieve color
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this color.
+        required: true
+      tags:
+      - Catalog
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Color'
+          description: Color detail.
+        '404':
+          description: Color not found or inactive.
+  /api/v1/inventory/:
+    get:
+      operationId: v1_inventory_list
+      description: |-
+        Mengambil daftar inventory seluruh product variant. Endpoint ini hanya dapat diakses oleh staff/admin.
+
+        Field `available` dihitung sebagai `stock_on_hand - reserved`.
+      summary: List inventory
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - Admin Inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedInventoryList'
+          description: Daftar inventory.
+  /api/v1/inventory/add-stock/:
+    post:
+      operationId: v1_inventory_add_stock_create
+      description: |-
+        Menambahkan stock ke inventory sebuah product variant.
+
+        Jika inventory untuk variant tersebut belum tersedia, inventory akan dibuat secara otomatis.
+
+        Operasi ini dilakukan secara atomic untuk menjaga konsistensi stock.
+      summary: Add stock
+      tags:
+      - Admin Inventory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddStock'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddStock'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AddStock'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inventory'
+              examples:
+                ExampleResponse:
+                  value:
+                    id: 1
+                    variant: 12
+                    variant_sku: GDR-OW-001-BLK-M
+                    stock_on_hand: 25
+                    reserved: 5
+                    available: 20
+                    updated_at: '2026-09-30T12:00:00Z'
+                  summary: Example response
+          description: Stock berhasil ditambahkan.
+        '400':
+          description: Data request tidak valid.
+  /api/v1/inventory/{id}/:
+    get:
+      operationId: v1_inventory_retrieve
+      description: Mengambil detail inventory berdasarkan ID inventory.
+      summary: Retrieve inventory
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this inventory.
+        required: true
+      tags:
+      - Admin Inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inventory'
+          description: Detail inventory.
+        '404':
+          description: Inventory tidak ditemukan.
+  /api/v1/inventory/reservations/:
+    get:
+      operationId: v1_inventory_reservations_list
+      description: |-
+        Mengambil daftar inventory reservation. Endpoint ini hanya dapat diakses oleh staff/admin.
+
+        Reservation dibuat dan diubah melalui inventory service sebagai bagian dari flow checkout dan payment.
+      summary: List inventory reservations
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - Admin Inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedInventoryReservationList'
+          description: Daftar inventory reservation.
+  /api/v1/inventory/reservations/{id}/:
+    get:
+      operationId: v1_inventory_reservations_retrieve
+      description: Mengambil detail satu inventory reservation berdasarkan ID.
+      summary: Retrieve inventory reservation
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this inventory reservation.
+        required: true
+      tags:
+      - Admin Inventory
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryReservation'
+          description: Detail inventory reservation.
+        '404':
+          description: Inventory reservation tidak ditemukan.
+  /api/v1/cart/:
+    get:
+      operationId: v1_cart_list
+      description: Mengambil active cart milik authenticated user. Jika user belum
+        memiliki active cart, cart baru akan dibuat secara otomatis.
+      summary: Retrieve active cart
+      tags:
+      - Cart
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+          description: ''
+    post:
+      operationId: v1_cart_create
+      description: |-
+        Menambahkan product variant ke active cart.
+
+        Jika variant sudah ada di cart, quantity akan ditambahkan ke quantity yang sudah ada.
+
+        Backend akan memvalidasi stock yang tersedia, tetapi tidak melakukan reservation. Reservation dilakukan pada proses checkout.
+      summary: Add item to cart
+      tags:
+      - Cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddCartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AddCartItem'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: Item berhasil ditambahkan ke cart.
+        '400':
+          description: Request tidak valid atau stock tidak mencukupi.
+  /api/v1/cart/clear/:
+    delete:
+      operationId: v1_cart_clear_destroy
+      description: Menghapus seluruh item dari active cart milik authenticated user.
+        Jika active cart belum ada atau cart sudah kosong, endpoint tetap berhasil
+        tanpa membuat cart baru.
+      summary: Clear cart
+      tags:
+      - Cart
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Cart berhasil dikosongkan.
+  /api/v1/cart/{id}/:
+    patch:
+      operationId: v1_cart_partial_update
+      description: |-
+        Mengubah quantity satu cart item.
+
+        Variant tidak dapat diubah melalui endpoint ini. Untuk variant berbeda, hapus item lalu tambahkan variant baru.
+
+        Backend akan memvalidasi stock yang tersedia.
+      summary: Update cart item quantity
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: ID cart item.
+        required: true
+      tags:
+      - Cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateCartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateCartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateCartItem'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: Quantity berhasil diperbarui.
+        '400':
+          description: Request tidak valid atau stock tidak mencukupi.
+        '404':
+          description: Cart item tidak ditemukan.
+    delete:
+      operationId: v1_cart_destroy
+      description: Menghapus satu item dari active cart.
+      summary: Remove cart item
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: ID cart item.
+        required: true
+      tags:
+      - Cart
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+        '404':
+          description: Cart item tidak ditemukan.
+  /api/v1/checkout/preview/:
+    get:
+      operationId: checkout_preview
+      description: |-
+        Return a checkout summary based on the authenticated user's active cart.
+
+        The response contains:
+        - Cart items and current product variant information.
+        - Available stock for each item.
+        - Active shipping methods.
+        - The selected shipping method, when provided.
+        - Subtotal, discount, shipping amount, tax, and grand total.
+
+        Use `shipping_method_id` to calculate the total with a specific shipping method. If it is omitted, `shipping_amount` is `0` and no shipping method is selected.
+
+        This endpoint is read-only. It does not create an order, convert the cart, or reserve inventory.
+      summary: Preview Checkout
+      parameters:
+      - in: query
+        name: shipping_method_id
+        schema:
+          type: integer
+        description: ID of an active shipping method to include in the checkout calculation.
+      tags:
+      - Checkout
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutSummary'
+          description: Checkout summary successfully retrieved.
+        '400':
+          description: Checkout preview cannot be generated. Possible reasons include
+            missing or empty active cart, inactive product variant, missing inventory,
+            insufficient stock, invalid shipping method ID, or inactive shipping method.
+        '401':
+          description: Authentication required.
+  /api/v1/orders/:
+    get:
+      operationId: orders_list
+      description: |-
+        Return all orders belonging to the authenticated customer.
+
+        Orders are returned from newest to oldest.
+      summary: List My Orders
+      tags:
+      - Orders
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderList'
+          description: Orders successfully retrieved.
+        '401':
+          description: Authentication required.
+    post:
+      operationId: orders_create
+      description: |-
+        Create a new order from the authenticated user's active cart.
+
+        Shipping address must be provided using exactly one of these sources:
+        - `shipping_address_id`: use an existing address belonging to the authenticated user.
+        - `shipping_address`: provide a new address for this order without saving it to the account.
+
+        The selected shipping method must be active. The address is copied into the order as an address snapshot.
+
+        The order is created with `PENDING` status. Inventory is reserved for the order and the active cart is converted to `CONVERTED` status as part of the same transaction.
+
+        If order creation or inventory reservation fails, the transaction is rolled back.
+      summary: Create Order
+      tags:
+      - Orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrderCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrderCreate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: Order successfully created.
+        '400':
+          description: Invalid request or order cannot be created. Possible reasons
+            include missing or conflicting shipping address sources, invalid shipping
+            method, empty or missing active cart, inactive product variant, or insufficient
+            inventory.
+        '401':
+          description: Authentication required.
+  /api/v1/orders/{order_number}/:
+    get:
+      operationId: orders_retrieve
+      description: |-
+        Return detailed information about a specific order belonging to the authenticated customer.
+
+        An order can only be retrieved by its owner.
+      summary: Get My Order Detail
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        description: Unique GIDORA order number.
+        required: true
+      tags:
+      - Orders
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: Order detail successfully retrieved.
+        '401':
+          description: Authentication required.
+        '404':
+          description: Order not found or the order does not belong to the authenticated
+            customer.
+  /api/v1/orders/{order_number}/cancel/:
+    post:
+      operationId: orders_cancel
+      description: |-
+        Cancel a pending order belonging to the authenticated customer.
+
+        Only orders with `PENDING` status can be cancelled. Active inventory reservations are released automatically.
+
+        An order that already has a payment created cannot be cancelled directly through this endpoint.
+      summary: Cancel My Order
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        description: Unique GIDORA order number.
+        required: true
+      tags:
+      - Orders
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: Order successfully cancelled.
+        '400':
+          description: Order cannot be cancelled because it is not in `PENDING` status
+            or a payment has already been created.
+        '401':
+          description: Authentication required.
+        '404':
+          description: Order not found or the order does not belong to the authenticated
+            customer.
+  /api/v1/payments/:
+    post:
+      operationId: payments_create
+      description: |2
+
+        Create a payment for the authenticated user's pending order.
+
+        The request only contains the order number and selected payment method.
+        The backend is responsible for translating the selected payment method
+        into the appropriate Midtrans Core API charge payload.
+
+        \### Supported payment methods
+
+        \| Payment method | Midtrans method | Payment data returned |
+        \|---|---|---|
+        \| \`BCA_VA\` | Bank Transfer | \`bank\`, \`va_number\`, \`expires_at\` |
+        \| \`BNI_VA\` | Bank Transfer | \`bank\`, \`va_number\`, \`expires_at\` |
+        \| \`BRI_VA\` | Bank Transfer | \`bank\`, \`va_number\`, \`expires_at\` |
+        \| \`PERMATA_VA\` | Bank Transfer | \`bank\`, \`va_number\`, \`expires_at\` |
+        \| \`CIMB_VA\` | Bank Transfer | \`bank\`, \`va_number\`, \`expires_at\` |
+        \| \`MANDIRI\` | E-Channel | \`bill_key\`, \`biller_code\`, \`expires_at\` |
+        \| \`GOPAY\` | GoPay | \`payment_url\`, \`expires_at\` |
+        \| \`SHOPEEPAY\` | ShopeePay | \`payment_url\`, \`expires_at\` |
+        \| \`QRIS\` | QRIS | \`qr_string\` and/or \`payment_url\`, \`expires_at\` |
+
+        The frontend should inspect the returned payment fields based on the
+        selected \`payment_method\`.
+
+        For example:
+
+        \- VA methods use \`va_number\`.
+        \- \`MANDIRI\` uses \`bill_key\` and \`biller_code\`.
+        \- \`GOPAY\` and \`SHOPEEPAY\` may use \`payment_url\`.
+        \- \`QRIS\` may use \`qr_string\` and/or \`payment_url\`.
+
+        The payment is created in \`PENDING\` status. The actual payment status
+        is updated through the Midtrans notification webhook or through the
+        payment status sync endpoint.
+
+        This endpoint does not accept payment-specific fields such as
+        \`va_number\`, \`bill_key\`, \`qr_string\`, or \`payment_url\`. Those values are
+        generated by Midtrans and returned in the response.
+      summary: Create Payment
+      tags:
+      - Payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentCreate'
+            examples:
+              BCAVirtualAccountRequest:
+                value:
+                  order_number: GDR-20260930-0001
+                  payment_method: BCA_VA
+                summary: BCA Virtual Account Request
+              MandiriRequest:
+                value:
+                  order_number: GDR-20260930-0002
+                  payment_method: MANDIRI
+                summary: Mandiri Request
+              QRISRequest:
+                value:
+                  order_number: GDR-20260930-0003
+                  payment_method: QRIS
+                summary: QRIS Request
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PaymentCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PaymentCreate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+              examples:
+                BCAVirtualAccount:
+                  value:
+                    id: 1
+                    order_number: GDR-20260930-0001
+                    provider: MIDTRANS
+                    payment_method: BCA_VA
+                    status: PENDING
+                    transaction_id: midtrans-transaction-001
+                    amount: '515000.00'
+                    currency: IDR
+                    bank: bca
+                    va_number: '1234567890'
+                    bill_key: null
+                    biller_code: null
+                    qr_string: null
+                    payment_url: null
+                    paid_at: null
+                    expires_at: '2026-10-01T15:30:00+07:00'
+                    created_at: '2026-10-01T14:30:00+07:00'
+                  summary: BCA Virtual Account
+                MandiriBillPayment:
+                  value:
+                    id: 2
+                    order_number: GDR-20260930-0002
+                    provider: MIDTRANS
+                    payment_method: MANDIRI
+                    status: PENDING
+                    transaction_id: midtrans-transaction-002
+                    amount: '750000.00'
+                    currency: IDR
+                    bank: null
+                    va_number: null
+                    bill_key: '123456789012'
+                    biller_code: '70012'
+                    qr_string: null
+                    payment_url: null
+                    paid_at: null
+                    expires_at: '2026-10-01T15:30:00+07:00'
+                    created_at: '2026-10-01T14:30:00+07:00'
+                  summary: Mandiri Bill Payment
+                QRIS:
+                  value:
+                    id: 3
+                    order_number: GDR-20260930-0003
+                    provider: MIDTRANS
+                    payment_method: QRIS
+                    status: PENDING
+                    transaction_id: midtrans-transaction-003
+                    amount: '250000.00'
+                    currency: IDR
+                    bank: null
+                    va_number: null
+                    bill_key: null
+                    biller_code: null
+                    qr_string: 000201010212...
+                    payment_url: https://app.midtrans.com/snap/vtweb/...
+                    paid_at: null
+                    expires_at: '2026-10-01T15:30:00+07:00'
+                    created_at: '2026-10-01T14:30:00+07:00'
+          description: Payment successfully created.
+        '400':
+          description: Invalid payment request or order state.
+        '401':
+          description: Authentication credentials were not provided.
+        '404':
+          description: Order not found for the authenticated user.
+        '502':
+          description: Midtrans API error.
+  /api/v1/payments/notification/:
+    post:
+      operationId: payments_midtrans_notification
+      description: |2
+
+        Receive payment status notifications from Midtrans.
+
+        This endpoint is called by Midtrans and does not use JWT authentication.
+
+        The request signature is verified using the Midtrans signature formula:
+
+        \`SHA512(order_id + status_code + gross_amount + ServerKey)\`
+
+        The notification is processed idempotently. Terminal payment states
+        are not applied repeatedly.
+
+        Successful settlement/capture changes the payment to \`PAID\`, confirms
+        the order, confirms the inventory reservation, and creates the shipment.
+
+        Failed, denied, cancelled, or expired payments release the inventory
+        reservation and may cancel the order when the order is still pending.
+      summary: Receive Midtrans Notification
+      tags:
+      - Payments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MidtransNotification'
+            examples:
+              SettlementNotification:
+                value:
+                  order_id: GDR-20260930-0001
+                  transaction_id: midtrans-transaction-001
+                  transaction_status: settlement
+                  status_code: '200'
+                  status_message: Success, transaction is found
+                  gross_amount: '515000.00'
+                  currency: IDR
+                  payment_type: bank_transfer
+                  fraud_status: accept
+                  signature_key: generated-by-midtrans
+                  bank: bca
+                  va_numbers:
+                  - bank: bca
+                    va_number: '1234567890'
+                summary: Settlement Notification
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MidtransNotification'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MidtransNotification'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+              examples:
+                Success:
+                  value:
+                    status: OK
+          description: Notification successfully processed.
+        '400':
+          description: Invalid notification payload.
+        '403':
+          description: Invalid Midtrans signature.
+        '404':
+          description: Payment or order was not found.
+  /api/v1/payments/orders/{order_number}/sync/:
+    post:
+      operationId: payments_status_sync
+      description: |2
+
+        Synchronize the payment status of an order with Midtrans.
+
+        This endpoint is a fallback reconciliation mechanism when a Midtrans
+        notification has not been received yet. It does not replace the
+        Midtrans notification webhook.
+
+        Only the authenticated owner of the order can perform this operation.
+      summary: Sync Payment Status
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        description: GIDORA order number.
+        required: true
+        examples:
+          OrderNumber:
+            value: GDR-20260930-0001
+            summary: Order Number
+      tags:
+      - Payments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+              examples:
+                PaymentStatus:
+                  value:
+                    id: 1
+                    order_number: GDR-20260930-0001
+                    provider: MIDTRANS
+                    payment_method: BCA_VA
+                    status: PAID
+                    transaction_id: midtrans-transaction-001
+                    amount: '515000.00'
+                    currency: IDR
+                    bank: bca
+                    va_number: '1234567890'
+                    bill_key: null
+                    biller_code: null
+                    qr_string: null
+                    payment_url: null
+                    paid_at: '2026-10-01T14:45:00+07:00'
+                    expires_at: '2026-10-01T15:30:00+07:00'
+                    created_at: '2026-10-01T14:30:00+07:00'
+                  summary: Payment Status
+          description: Payment status successfully synchronized.
+        '400':
+          description: Payment status cannot be synchronized.
+        '401':
+          description: Authentication credentials were not provided.
+        '404':
+          description: Order or payment not found.
+        '502':
+          description: Midtrans API error.
+  /api/v1/shipping/methods/:
+    get:
+      operationId: shipping_methods_list
+      description: |2
+
+        Retrieve all active shipping methods available to customers.
+
+        This endpoint is used during checkout so the customer can select
+        a shipping method before creating an order.
+
+        Each shipping method contains:
+
+        - `id` — shipping method identifier used when creating an order.
+        - `code` — unique shipping method code.
+        - `courier` — courier name.
+        - `service` — courier service.
+        - `price` — static shipping price in IDR.
+
+        Only shipping methods with `is_active=true` are returned.
+
+        For the current MVP, shipping prices are static and are not calculated
+        dynamically based on destination, weight, or courier API.
+      summary: List Shipping Methods
+      tags:
+      - Shipping
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShippingMethod'
+              examples:
+                ShippingMethods:
+                  value:
+                  - - id: 1
+                      code: JNE_REG
+                      courier: JNE
+                      service: REG
+                      price: '15000'
+                    - id: 2
+                      code: JNE_YES
+                      courier: JNE
+                      service: 'YES'
+                      price: '25000'
+                  summary: Shipping Methods
+          description: List of active shipping methods.
+        '401':
+          description: Authentication credentials were not provided.
+  /api/v1/shipping/{order_number}/:
+    get:
+      operationId: shipment_retrieve
+      description: |2
+
+        Retrieve shipment information for a specific order.
+
+        Customers can only access the shipment belonging to their own order.
+
+        ### Shipment lifecycle
+
+        - `PENDING` — shipment has been created and is waiting for fulfillment.
+        - `PROCESSING` — staff is currently processing the order.
+        - `SHIPPED` — shipment has been handed to the courier and tracking
+          information is available.
+        - `DELIVERED` — shipment has been delivered to the customer.
+        - `CANCELLED` — shipment was cancelled before being shipped.
+
+        A shipment is normally created automatically when payment succeeds,
+        the order becomes `CONFIRMED`, and the fulfillment flow begins.
+
+        The response also includes `order_status`, which represents the overall
+        order status separately from the shipment status.
+      summary: Get Shipment
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        description: GIDORA order number.
+        required: true
+        examples:
+          OrderNumber:
+            value: GDR-20260929-0008
+            summary: Order Number
+      tags:
+      - Shipping
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+              examples:
+                Shipment:
+                  value:
+                    id: 1
+                    order_number: GDR-20260929-0008
+                    order_status: SHIPPED
+                    status: SHIPPED
+                    courier: JNE
+                    service: REG
+                    tracking_number: JNE123456789
+                    shipped_at: '2026-10-01T10:00:00+07:00'
+                    delivered_at: null
+                    created_at: '2026-09-30T14:00:00+07:00'
+                    updated_at: '2026-10-01T10:00:00+07:00'
+                    items:
+                    - id: 1
+                      product_name_snapshot: Test Shirt
+                      sku_snapshot: GDR-SH-001-BLK-M
+                      quantity: 2
+          description: Shipment information for the specified order.
+        '401':
+          description: Authentication credentials were not provided.
+        '404':
+          description: Shipment was not found, or the order does not belong to the
+            authenticated customer.
+  /api/v1/admin/accounts/users/:
+    get:
+      operationId: admin_accounts_users_list
+      description: Mengambil daftar akun customer. Akun staff dan superuser tidak
+        disertakan.
+      summary: List customers
+      parameters:
+      - in: query
+        name: ordering
+        schema:
+          type: string
+        description: Urutkan berdasarkan created_at atau -created_at.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Cari berdasarkan email, nama depan, atau nama belakang.
+      tags:
+      - Admin Accounts
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdminUserList'
+          description: Daftar customer.
+        '401':
+          description: Authentication diperlukan.
+        '403':
+          description: Akses hanya untuk staff.
+  /api/v1/admin/accounts/users/{id}/:
+    patch:
+      operationId: admin_accounts_users_partial_update
+      description: Memperbarui informasi customer. Field yang dapat diubah adalah
+        first_name, last_name, phone_number, dan is_active. Email serta permission
+        akun tidak dapat diubah melalui endpoint ini.
+      summary: Update customer
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Admin Accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminUser'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUser'
+          description: Data customer berhasil diperbarui.
+        '400':
+          description: Data tidak valid.
+        '401':
+          description: Authentication diperlukan.
+        '403':
+          description: Akses hanya untuk staff.
+        '404':
+          description: Customer tidak ditemukan.
+    get:
+      operationId: admin_accounts_users_retrieve
+      description: Mengambil detail akun customer berdasarkan ID. Akun staff dan superuser
+        tidak dapat diakses melalui endpoint ini.
+      summary: Get customer detail
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Admin Accounts
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminUser'
+          description: Detail customer.
+        '401':
+          description: Authentication diperlukan.
+        '403':
+          description: Akses hanya untuk staff.
+        '404':
+          description: Customer tidak ditemukan.
+  /api/v1/admin/catalog/products/:
+    get:
+      operationId: v1_admin_catalog_products_list
+      description: |-
+        Returns products for catalog management. This endpoint requires an authenticated staff/admin user.
+
+        Results can be filtered by category, gender, size type, and active status, searched by product information, and sorted by name, product code, or timestamps.
+      summary: List products
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: integer
+        description: Filter by category primary key.
+      - in: query
+        name: category__code
+        schema:
+          type: string
+        description: Filter by category code. Use a category code managed through
+          the Admin Catalog category endpoint.
+      - in: query
+        name: gender
+        schema:
+          type: string
+          enum:
+          - men
+          - unisex
+          - women
+        description: Filter by product gender.
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+        description: Filter by product active status.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -created_at
+          - -name
+          - -product_code
+          - -updated_at
+          - created_at
+          - name
+          - product_code
+          - updated_at
+        description: Sort products by name, product code, creation date, or update
+          date. Prefix the field with - for descending order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by product code, name, description, material, or category
+          name.
+      - in: query
+        name: size_type
+        schema:
+          type: integer
+        description: Filter by size type primary key.
+      - in: query
+        name: size_type__code
+        schema:
+          type: string
+          enum:
+          - APPAREL
+          - FOOTWEAR
+          - ONE_SIZE
+        description: Filter by size type code. Available codes are managed through
+          the Admin Catalog size type endpoint.
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdminProductList'
+          description: List of products.
+    post:
+      operationId: v1_admin_catalog_products_create
+      description: |-
+        Creates a new product for the catalog. This endpoint requires an authenticated staff/admin user.
+
+        The product code and slug are generated automatically. If size_type is omitted, the default size type of the selected category is used.
+      summary: Create product
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminProduct'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProduct'
+          description: Product created successfully.
+  /api/v1/admin/catalog/products/{id}/:
+    patch:
+      operationId: v1_admin_catalog_products_partial_update
+      description: |-
+        Updates selected product fields without replacing the entire product. This endpoint requires an authenticated staff/admin user.
+
+        The product code and slug are read-only and cannot be changed manually.
+      summary: Partially update product
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProduct'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProduct'
+          description: Product updated successfully.
+        '404':
+          description: Product not found.
+    put:
+      operationId: v1_admin_catalog_products_update
+      description: |-
+        Replaces the selected product data. This endpoint requires an authenticated staff/admin user.
+
+        The product code and slug are generated automatically and cannot be changed manually.
+      summary: Update product
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminProduct'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminProduct'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminProduct'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProduct'
+          description: Product updated successfully.
+        '404':
+          description: Product not found.
+    get:
+      operationId: v1_admin_catalog_products_retrieve
+      description: Returns detailed information for a product. This endpoint requires
+        an authenticated staff/admin user.
+      summary: Retrieve product
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProduct'
+          description: Product detail.
+        '404':
+          description: Product not found.
+    delete:
+      operationId: v1_admin_catalog_products_destroy
+      description: Deletes the selected product from the catalog. This endpoint requires
+        an authenticated staff/admin user.
+      summary: Delete product
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Product deleted successfully.
+        '404':
+          description: Product not found.
+  /api/v1/admin/catalog/product-colors/:
+    get:
+      operationId: v1_admin_catalog_product_colors_list
+      description: |-
+        Returns product-color relationships for catalog management. This endpoint requires an authenticated staff/admin user.
+
+        Results can be filtered by product, color, and active status, searched by product or color information, and sorted by product name or color name.
+      summary: List product colors
+      parameters:
+      - in: query
+        name: color
+        schema:
+          type: integer
+        description: Filter by color primary key.
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+        description: Filter by active status.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -color__name
+          - -product__name
+          - color__name
+          - product__name
+        description: Sort by product name or color name. Prefix the field with - for
+          descending order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: product
+        schema:
+          type: integer
+        description: Filter by product primary key.
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by product name, product code, color name, or color code.
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdminProductColorList'
+          description: List of product-color relationships.
+    post:
+      operationId: v1_admin_catalog_product_colors_create
+      description: Associates an active color with an active product. This endpoint
+        requires an authenticated staff/admin user.
+      summary: Create product color
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminProductColor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminProductColor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminProductColor'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductColor'
+          description: Product color created successfully.
+  /api/v1/admin/catalog/product-colors/{id}/:
+    patch:
+      operationId: v1_admin_catalog_product_colors_partial_update
+      description: Updates selected fields of a product-color relationship. This endpoint
+        requires an authenticated staff/admin user.
+      summary: Partially update product color
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product color.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProductColor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProductColor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProductColor'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductColor'
+          description: Product color updated successfully.
+        '404':
+          description: Product-color relationship not found.
+    put:
+      operationId: v1_admin_catalog_product_colors_update
+      description: Replaces the selected product-color relationship. This endpoint
+        requires an authenticated staff/admin user.
+      summary: Update product color
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product color.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminProductColor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminProductColor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminProductColor'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductColor'
+          description: Product color updated successfully.
+        '404':
+          description: Product-color relationship not found.
+    get:
+      operationId: v1_admin_catalog_product_colors_retrieve
+      description: Returns detailed information for a product-color relationship.
+        This endpoint requires an authenticated staff/admin user.
+      summary: Retrieve product color
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product color.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductColor'
+          description: Product-color detail.
+        '404':
+          description: Product-color relationship not found.
+    delete:
+      operationId: v1_admin_catalog_product_colors_destroy
+      description: Removes the selected product-color relationship. This endpoint
+        requires an authenticated staff/admin user.
+      summary: Delete product color
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product color.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Product color deleted successfully.
+        '404':
+          description: Product-color relationship not found.
+  /api/v1/admin/catalog/variants/:
+    get:
+      operationId: v1_admin_catalog_variants_list
+      description: |-
+        Returns product variants for catalog management. This endpoint requires an authenticated staff/admin user.
+
+        Results can be filtered by product, color, size, and active status, searched by SKU or related catalog information, and sorted by SKU, price, or timestamps.
+      summary: List product variants
+      parameters:
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+        description: Filter by active status.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -created_at
+          - -price
+          - -sku
+          - -updated_at
+          - created_at
+          - price
+          - sku
+          - updated_at
+        description: Sort by SKU, price, creation date, or update date. Prefix the
+          field with - for descending order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: product_color__color
+        schema:
+          type: integer
+        description: Filter by color primary key.
+      - in: query
+        name: product_color__product
+        schema:
+          type: integer
+        description: Filter by product primary key.
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by SKU, product name, product code, color name, color
+          code, or size name.
+      - in: query
+        name: size
+        schema:
+          type: integer
+        description: Filter by size primary key.
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdminProductVariantList'
+          description: List of product variants.
+    post:
+      operationId: v1_admin_catalog_variants_create
+      description: |-
+        Creates a product variant for a product color and size. This endpoint requires an authenticated staff/admin user.
+
+        The SKU is generated automatically from the product, color, and size.
+      summary: Create product variant
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminProductVariant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminProductVariant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminProductVariant'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductVariant'
+          description: Product variant created successfully.
+  /api/v1/admin/catalog/variants/{id}/:
+    patch:
+      operationId: v1_admin_catalog_variants_partial_update
+      description: |-
+        Updates selected product variant fields without replacing the entire variant. This endpoint requires an authenticated staff/admin user.
+
+        The SKU remains read-only.
+      summary: Partially update product variant
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product variant.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProductVariant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProductVariant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProductVariant'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductVariant'
+          description: Product variant updated successfully.
+        '404':
+          description: Product variant not found.
+    put:
+      operationId: v1_admin_catalog_variants_update
+      description: |-
+        Replaces the selected product variant data. This endpoint requires an authenticated staff/admin user.
+
+        The SKU is generated automatically and remains read-only.
+      summary: Update product variant
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product variant.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminProductVariant'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminProductVariant'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminProductVariant'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductVariant'
+          description: Product variant updated successfully.
+        '404':
+          description: Product variant not found.
+    get:
+      operationId: v1_admin_catalog_variants_retrieve
+      description: Returns detailed information for a product variant. This endpoint
+        requires an authenticated staff/admin user.
+      summary: Retrieve product variant
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product variant.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductVariant'
+          description: Product variant detail.
+        '404':
+          description: Product variant not found.
+    delete:
+      operationId: v1_admin_catalog_variants_destroy
+      description: Deletes the selected product variant from the catalog. This endpoint
+        requires an authenticated staff/admin user.
+      summary: Delete product variant
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product variant.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Product variant deleted successfully.
+        '404':
+          description: Product variant not found.
+  /api/v1/admin/catalog/images/:
+    get:
+      operationId: v1_admin_catalog_images_list
+      description: |-
+        Returns product images for catalog management. This endpoint requires an authenticated staff/admin user.
+
+        Results can be filtered by product, product color, and image type, searched by product information, and sorted by display order or image type.
+      summary: List product images
+      parameters:
+      - in: query
+        name: image_type
+        schema:
+          type: string
+          enum:
+          - additional
+          - detail
+          - primary
+        description: Filter by image type.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -image_type
+          - -sort_order
+          - image_type
+          - sort_order
+        description: Sort by display order or image type. Prefix the field with -
+          for descending order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: product
+        schema:
+          type: integer
+        description: Filter by product primary key.
+      - in: query
+        name: product_color
+        schema:
+          type: integer
+        description: Filter by product color primary key.
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by product name or product code.
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdminProductImageList'
+          description: List of product images.
+    post:
+      operationId: v1_admin_catalog_images_create
+      description: |-
+        Creates a product image associated with a product color. This endpoint requires an authenticated staff/admin user.
+
+        The selected product color must belong to the selected product. Only one primary image is allowed for each product.
+      summary: Create product image
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminProductImage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminProductImage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminProductImage'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductImage'
+          description: Product image created successfully.
+  /api/v1/admin/catalog/images/{id}/:
+    patch:
+      operationId: v1_admin_catalog_images_partial_update
+      description: Updates selected product image fields without replacing the entire
+        image record. This endpoint requires an authenticated staff/admin user.
+      summary: Partially update product image
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product image.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProductImage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProductImage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminProductImage'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductImage'
+          description: Product image updated successfully.
+        '404':
+          description: Product image not found.
+    put:
+      operationId: v1_admin_catalog_images_update
+      description: Replaces the selected product image data. This endpoint requires
+        an authenticated staff/admin user.
+      summary: Update product image
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product image.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminProductImage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminProductImage'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminProductImage'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductImage'
+          description: Product image updated successfully.
+        '404':
+          description: Product image not found.
+    get:
+      operationId: v1_admin_catalog_images_retrieve
+      description: Returns detailed information for a product image. This endpoint
+        requires an authenticated staff/admin user.
+      summary: Retrieve product image
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product image.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminProductImage'
+          description: Product image detail.
+        '404':
+          description: Product image not found.
+    delete:
+      operationId: v1_admin_catalog_images_destroy
+      description: Deletes the selected product image from the catalog. This endpoint
+        requires an authenticated staff/admin user.
+      summary: Delete product image
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this product image.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Product image deleted successfully.
+        '404':
+          description: Product image not found.
+  /api/v1/admin/catalog/categories/:
+    get:
+      operationId: v1_admin_catalog_categories_list
+      description: |-
+        Returns categories for catalog administration. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        Results can be filtered by category code, default size type, and active status, searched by name or code, and sorted by name, code, or product sequence.
+      summary: List categories
+      parameters:
+      - in: query
+        name: code
+        schema:
+          type: string
+        description: Filter by category code.
+      - in: query
+        name: default_size_type
+        schema:
+          type: integer
+        description: Filter by default size type primary key.
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+        description: Filter by active status.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -code
+          - -name
+          - -next_product_sequence
+          - code
+          - name
+          - next_product_sequence
+        description: Sort by name, code, or next product sequence. Prefix the field
+          with - for descending order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by category name or code.
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdminCategoryList'
+          description: List of categories.
+    post:
+      operationId: v1_admin_catalog_categories_create
+      description: |-
+        Creates a new catalog category. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        The selected default size type must be active.
+      summary: Create category
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminCategory'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminCategory'
+          description: Category created successfully.
+  /api/v1/admin/catalog/categories/{id}/:
+    patch:
+      operationId: v1_admin_catalog_categories_partial_update
+      description: |-
+        Updates selected category fields. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        The next product sequence remains read-only.
+      summary: Partially update category
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminCategory'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminCategory'
+          description: Category updated successfully.
+        '404':
+          description: Category not found.
+    put:
+      operationId: v1_admin_catalog_categories_update
+      description: |-
+        Replaces the selected category data. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        The next product sequence is managed automatically and remains read-only.
+      summary: Update category
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminCategory'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminCategory'
+          description: Category updated successfully.
+        '404':
+          description: Category not found.
+    get:
+      operationId: v1_admin_catalog_categories_retrieve
+      description: Returns detailed information for a category. This endpoint requires
+        an authenticated superuser. Staff users who are not superusers cannot access
+        this endpoint.
+      summary: Retrieve category
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminCategory'
+          description: Category detail.
+        '404':
+          description: Category not found.
+    delete:
+      operationId: v1_admin_catalog_categories_destroy
+      description: Deletes the selected category. This endpoint requires an authenticated
+        superuser. Staff users who are not superusers cannot access this endpoint.
+      summary: Delete category
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this category.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Category deleted successfully.
+        '404':
+          description: Category not found.
+  /api/v1/admin/catalog/colors/:
+    get:
+      operationId: v1_admin_catalog_colors_list
+      description: |-
+        Returns colors for catalog administration. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        Results can be filtered by color code and active status, searched by name, code, or slug, and sorted by name or code.
+      summary: List colors
+      parameters:
+      - in: query
+        name: code
+        schema:
+          type: string
+        description: Filter by color code.
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+        description: Filter by active status.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -code
+          - -name
+          - code
+          - name
+        description: Sort by name or code. Prefix the field with - for descending
+          order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by color name, code, or slug.
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdminColorList'
+          description: List of colors.
+    post:
+      operationId: v1_admin_catalog_colors_create
+      description: |-
+        Creates a new catalog color. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        The slug is generated automatically from the color name.
+      summary: Create color
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminColor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminColor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminColor'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminColor'
+          description: Color created successfully.
+  /api/v1/admin/catalog/colors/{id}/:
+    patch:
+      operationId: v1_admin_catalog_colors_partial_update
+      description: |-
+        Updates selected color fields. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        The slug remains read-only.
+      summary: Partially update color
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this color.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminColor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminColor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminColor'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminColor'
+          description: Color updated successfully.
+        '404':
+          description: Color not found.
+    put:
+      operationId: v1_admin_catalog_colors_update
+      description: |-
+        Replaces the selected color data. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        The slug remains read-only.
+      summary: Update color
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this color.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminColor'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminColor'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminColor'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminColor'
+          description: Color updated successfully.
+        '404':
+          description: Color not found.
+    get:
+      operationId: v1_admin_catalog_colors_retrieve
+      description: Returns detailed information for a color. This endpoint requires
+        an authenticated superuser. Staff users who are not superusers cannot access
+        this endpoint.
+      summary: Retrieve color
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this color.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminColor'
+          description: Color detail.
+        '404':
+          description: Color not found.
+    delete:
+      operationId: v1_admin_catalog_colors_destroy
+      description: Deletes the selected catalog color. This endpoint requires an authenticated
+        superuser. Staff users who are not superusers cannot access this endpoint.
+      summary: Delete color
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this color.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Color deleted successfully.
+        '404':
+          description: Color not found.
+  /api/v1/admin/catalog/sizes/:
+    get:
+      operationId: v1_admin_catalog_sizes_list
+      description: |-
+        Returns sizes for catalog administration. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        Results can be filtered by size type and active status, searched by size or size type information, and sorted by name or sort order.
+      summary: List sizes
+      parameters:
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+        description: Filter by active status.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -name
+          - -sort_order
+          - name
+          - sort_order
+        description: Sort by name or sort order. Prefix the field with - for descending
+          order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by size name, size type name, or size type code.
+      - in: query
+        name: size_type
+        schema:
+          type: integer
+        description: Filter by size type primary key.
+      - in: query
+        name: size_type__code
+        schema:
+          type: string
+          enum:
+          - APPAREL
+          - FOOTWEAR
+          - ONE_SIZE
+        description: Filter by size type code. Use a code managed through the Admin
+          Catalog size type endpoint.
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdminSizeList'
+          description: List of sizes.
+    post:
+      operationId: v1_admin_catalog_sizes_create
+      description: Creates a new catalog size associated with an active size type.
+        This endpoint requires an authenticated superuser. Staff users who are not
+        superusers cannot access this endpoint.
+      summary: Create size
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminSize'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminSize'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminSize'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSize'
+          description: Size created successfully.
+  /api/v1/admin/catalog/sizes/{id}/:
+    patch:
+      operationId: v1_admin_catalog_sizes_partial_update
+      description: Updates selected size fields. This endpoint requires an authenticated
+        superuser. Staff users who are not superusers cannot access this endpoint.
+      summary: Partially update size
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this size.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminSize'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminSize'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminSize'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSize'
+          description: Size updated successfully.
+        '404':
+          description: Size not found.
+    put:
+      operationId: v1_admin_catalog_sizes_update
+      description: Replaces the selected size data. This endpoint requires an authenticated
+        superuser. Staff users who are not superusers cannot access this endpoint.
+      summary: Update size
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this size.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminSize'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminSize'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminSize'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSize'
+          description: Size updated successfully.
+        '404':
+          description: Size not found.
+    get:
+      operationId: v1_admin_catalog_sizes_retrieve
+      description: Returns detailed information for a size. This endpoint requires
+        an authenticated superuser. Staff users who are not superusers cannot access
+        this endpoint.
+      summary: Retrieve size
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this size.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSize'
+          description: Size detail.
+        '404':
+          description: Size not found.
+    delete:
+      operationId: v1_admin_catalog_sizes_destroy
+      description: Deletes the selected catalog size. This endpoint requires an authenticated
+        superuser. Staff users who are not superusers cannot access this endpoint.
+      summary: Delete size
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this size.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Size deleted successfully.
+        '404':
+          description: Size not found.
+  /api/v1/admin/catalog/size-types/:
+    get:
+      operationId: v1_admin_catalog_size_types_list
+      description: |-
+        Returns size types for catalog administration. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        Size type codes are fixed and cannot be changed through this API. Results can be filtered by code and active status, searched by name or code, and sorted by name or code.
+      summary: List size types
+      parameters:
+      - in: query
+        name: code
+        schema:
+          type: string
+          enum:
+          - APPAREL
+          - FOOTWEAR
+          - ONE_SIZE
+        description: Filter by size type code.
+      - in: query
+        name: is_active
+        schema:
+          type: boolean
+        description: Filter by active status.
+      - in: query
+        name: ordering
+        schema:
+          type: string
+          enum:
+          - -code
+          - -name
+          - code
+          - name
+        description: Sort by name or code. Prefix the field with - for descending
+          order.
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search by size type name or code.
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAdminSizeTypeList'
+          description: List of size types.
+  /api/v1/admin/catalog/size-types/{id}/:
+    patch:
+      operationId: v1_admin_catalog_size_types_partial_update
+      description: |-
+        Updates selected size type fields. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        The size type code remains read-only.
+      summary: Partially update size type
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this size type.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminSizeType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminSizeType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAdminSizeType'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSizeType'
+          description: Size type updated successfully.
+        '404':
+          description: Size type not found.
+    put:
+      operationId: v1_admin_catalog_size_types_update
+      description: |-
+        Replaces the selected size type data. This endpoint requires an authenticated superuser. Staff users who are not superusers cannot access this endpoint.
+
+        The size type code remains read-only.
+      summary: Update size type
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this size type.
+        required: true
+      tags:
+      - Admin Catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminSizeType'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AdminSizeType'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AdminSizeType'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSizeType'
+          description: Size type updated successfully.
+        '404':
+          description: Size type not found.
+    get:
+      operationId: v1_admin_catalog_size_types_retrieve
+      description: Returns detailed information for a size type. This endpoint requires
+        an authenticated superuser. Staff users who are not superusers cannot access
+        this endpoint.
+      summary: Retrieve size type
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this size type.
+        required: true
+      tags:
+      - Admin Catalog
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSizeType'
+          description: Size type detail.
+        '404':
+          description: Size type not found.
+  /api/v1/admin/orders/:
+    get:
+      operationId: admin_orders_list
+      description: |-
+        Return all customer orders for authenticated staff users.
+
+        This endpoint is read-only. Order status changes are handled by the payment and shipping workflows.
+      summary: List All Orders
+      tags:
+      - Admin Orders
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderList'
+          description: Orders successfully retrieved.
+        '401':
+          description: Authentication required.
+        '403':
+          description: Staff permission required.
+  /api/v1/admin/orders/{order_number}/:
+    get:
+      operationId: admin_orders_retrieve
+      description: |-
+        Return detailed information about any customer order for authenticated staff users.
+
+        This endpoint is read-only. Order status changes are handled by the payment and shipping workflows.
+      summary: Get Order Detail
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        description: Unique GIDORA order number.
+        required: true
+      tags:
+      - Admin Orders
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: Order detail successfully retrieved.
+        '401':
+          description: Authentication required.
+        '403':
+          description: Staff permission required.
+        '404':
+          description: Order not found.
+  /api/v1/admin/shipping/{order_number}/processing/:
+    post:
+      operationId: admin_shipment_processing
+      description: |2
+
+        Start fulfillment processing for an order's shipment.
+
+        This endpoint is restricted to staff/admin users.
+
+        ### Requirements
+
+        - Shipment must currently have status `PENDING`.
+        - No request body is required.
+
+        ### Result
+
+        - Shipment status → `PROCESSING`
+        - Order status → `PROCESSING`
+
+        This endpoint only changes the fulfillment state. It does not modify
+        payment data or inventory quantities.
+      summary: Start Shipment Processing
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        description: GIDORA order number.
+        required: true
+        examples:
+          OrderNumber:
+            value: GDR-20260929-0008
+            summary: Order Number
+      tags:
+      - Admin Shipping
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+          description: Shipment successfully moved to PROCESSING.
+        '400':
+          description: Shipment cannot be processed because its current status is
+            not PENDING.
+        '401':
+          description: Authentication credentials were not provided.
+        '403':
+          description: Authenticated user is not a staff/admin user.
+        '404':
+          description: Shipment for the specified order was not found.
+  /api/v1/admin/shipping/{order_number}/ship/:
+    post:
+      operationId: admin_shipment_ship
+      description: |2
+
+        Mark a shipment as shipped.
+
+        This endpoint is restricted to staff/admin users.
+
+        ### Requirements
+
+        - Shipment must currently have status `PROCESSING`.
+        - `tracking_number` is required.
+        - No courier or service is accepted in the request body.
+
+        Courier and service are taken from the shipping snapshot stored on
+        the Order and copied to the Shipment when the shipment is marked as
+        shipped.
+
+        ### Result
+
+        - Shipment status → `SHIPPED`
+        - Order status → `SHIPPED`
+        - `shipped_at` is automatically set.
+        - Courier and service are copied from the order shipping snapshot.
+      summary: Ship Order
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        description: GIDORA order number.
+        required: true
+        examples:
+          OrderNumber:
+            value: GDR-20260929-0008
+            summary: Order Number
+      tags:
+      - Admin Shipping
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentShip'
+            examples:
+              ShipOrderRequest:
+                value:
+                  tracking_number: JNE123456789
+                summary: Ship Order Request
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ShipmentShip'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ShipmentShip'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+              examples:
+                ShippedShipment:
+                  value:
+                    id: 1
+                    order_number: GDR-20260929-0008
+                    order_status: SHIPPED
+                    status: SHIPPED
+                    courier: JNE
+                    service: REG
+                    tracking_number: JNE123456789
+                    shipped_at: '2026-10-01T10:00:00+07:00'
+                    delivered_at: null
+                    created_at: '2026-09-30T14:00:00+07:00'
+                    updated_at: '2026-10-01T10:00:00+07:00'
+                    items:
+                    - id: 1
+                      product_name_snapshot: Test Shirt
+                      sku_snapshot: GDR-SH-001-BLK-M
+                      quantity: 2
+                  summary: Shipped Shipment
+          description: Shipment successfully marked as SHIPPED.
+        '400':
+          description: Invalid tracking number or shipment is not currently in PROCESSING
+            status.
+        '401':
+          description: Authentication credentials were not provided.
+        '403':
+          description: Authenticated user is not a staff/admin user.
+        '404':
+          description: Shipment for the specified order was not found.
+  /api/v1/admin/shipping/{order_number}/deliver/:
+    post:
+      operationId: admin_shipment_deliver
+      description: |2
+
+        Mark a shipped shipment as delivered.
+
+        This endpoint is restricted to staff/admin users.
+
+        ### Requirements
+
+        - Shipment must currently have status `SHIPPED`.
+        - No request body is required.
+
+        ### Result
+
+        - Shipment status → `DELIVERED`
+        - Order status → `DELIVERED`
+        - `delivered_at` is automatically set.
+      summary: Mark Shipment as Delivered
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        description: GIDORA order number.
+        required: true
+        examples:
+          OrderNumber:
+            value: GDR-20260929-0008
+            summary: Order Number
+      tags:
+      - Admin Shipping
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+          description: Shipment successfully marked as DELIVERED.
+        '400':
+          description: Shipment cannot be delivered because its current status is
+            not SHIPPED.
+        '401':
+          description: Authentication credentials were not provided.
+        '403':
+          description: Authenticated user is not a staff/admin user.
+        '404':
+          description: Shipment for the specified order was not found.
+  /api/v1/admin/shipping/{order_number}/cancel/:
+    post:
+      operationId: admin_shipment_cancel
+      description: |2
+
+        Cancel a shipment before it has been shipped.
+
+        This endpoint is restricted to staff/admin users.
+
+        ### Requirements
+
+        The shipment must currently be:
+
+        - `PENDING`, or
+        - `PROCESSING`
+
+        A shipment that is already `SHIPPED` or `DELIVERED` cannot be cancelled
+        through this endpoint.
+
+        ### Result
+
+        - Shipment status → `CANCELLED`
+
+        This operation only changes the Shipment status.
+
+        It does **not** automatically change the related Order status to
+        `CANCELLED`.
+      summary: Cancel Shipment
+      parameters:
+      - in: path
+        name: order_number
+        schema:
+          type: string
+        description: GIDORA order number.
+        required: true
+        examples:
+          OrderNumber:
+            value: GDR-20260929-0008
+            summary: Order Number
+      tags:
+      - Admin Shipping
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+          description: Shipment successfully cancelled.
+        '400':
+          description: Shipment cannot be cancelled because its current status does
+            not allow cancellation.
+        '401':
+          description: Authentication credentials were not provided.
+        '403':
+          description: Authenticated user is not a staff/admin user.
+        '404':
+          description: Shipment for the specified order was not found.
+  /api/schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - ht
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+components:
+  schemas:
+    Activation:
+      type: object
+      properties:
+        uid:
+          type: string
+        token:
+          type: string
+      required:
+      - token
+      - uid
+    AddCartItem:
+      type: object
+      properties:
+        variant:
+          type: integer
+          description: ID product variant yang ingin ditambahkan.
+        quantity:
+          type: integer
+          minimum: 1
+          description: Jumlah unit yang ingin ditambahkan.
+      required:
+      - quantity
+      - variant
+    AddStock:
+      type: object
+      properties:
+        variant:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+      required:
+      - quantity
+      - variant
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        label:
+          type: string
+          description: Label alamat, misalnya Home, Office, atau Apartment.
+          maxLength: 50
+        recipient_name:
+          type: string
+          description: Nama penerima barang.
+          maxLength: 150
+        phone_number:
+          type: string
+          description: Nomor telepon penerima.
+          maxLength: 30
+        address_line:
+          type: string
+          description: Alamat lengkap, termasuk nama jalan dan nomor rumah.
+        sub_district:
+          type: string
+          description: Kelurahan/desa.
+          maxLength: 100
+        district:
+          type: string
+          description: Kecamatan.
+          maxLength: 100
+        city:
+          type: string
+          description: Kota/kabupaten.
+          maxLength: 100
+        province:
+          type: string
+          description: Provinsi.
+          maxLength: 100
+        postal_code:
+          type: string
+          description: Kode pos.
+          maxLength: 20
+        country:
+          type: string
+          description: 'Negara. Default: Indonesia.'
+          maxLength: 100
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - address_line
+      - city
+      - country
+      - created_at
+      - district
+      - id
+      - label
+      - phone_number
+      - postal_code
+      - province
+      - recipient_name
+      - sub_district
+      - updated_at
+    AddressTypeEnum:
+      enum:
+      - SHIPPING
+      - BILLING
+      type: string
+      description: |-
+        * `SHIPPING` - Shipping
+        * `BILLING` - Billing
+    AdminCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        code:
+          type: string
+          pattern: ^[A-Z0-9]+(?:-[A-Z0-9]+)*$
+          maxLength: 10
+        default_size_type:
+          type: integer
+        next_product_sequence:
+          type: integer
+          readOnly: true
+        is_active:
+          type: boolean
+      required:
+      - code
+      - default_size_type
+      - id
+      - name
+      - next_product_sequence
+    AdminColor:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        code:
+          type: string
+          pattern: ^[A-Z0-9]+(?:-[A-Z0-9]+)*$
+          maxLength: 10
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        hex_code:
+          type: string
+          pattern: ^#[0-9A-Fa-f]{6}$
+          maxLength: 7
+        is_active:
+          type: boolean
+      required:
+      - code
+      - hex_code
+      - id
+      - name
+      - slug
+    AdminProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product_code:
+          type: string
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        name:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        material:
+          type: string
+          maxLength: 200
+        badge:
+          type: string
+          maxLength: 50
+        category:
+          type: integer
+        gender:
+          $ref: '#/components/schemas/GenderEnum'
+        size_type:
+          type: integer
+          nullable: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - category
+      - created_at
+      - gender
+      - id
+      - name
+      - product_code
+      - slug
+      - updated_at
+    AdminProductColor:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+        color:
+          type: integer
+        is_active:
+          type: boolean
+      required:
+      - color
+      - id
+      - product
+    AdminProductImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+        product_color:
+          type: integer
+        image:
+          type: string
+          format: uri
+        image_type:
+          $ref: '#/components/schemas/ImageTypeEnum'
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          default: 0
+      required:
+      - id
+      - image
+      - image_type
+      - product
+      - product_color
+    AdminProductVariant:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sku:
+          type: string
+          readOnly: true
+        product_color:
+          type: integer
+        size:
+          type: integer
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+        is_active:
+          type: boolean
+      required:
+      - id
+      - price
+      - product_color
+      - size
+      - sku
+    AdminSize:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+        size_type:
+          type: integer
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        is_active:
+          type: boolean
+      required:
+      - id
+      - name
+      - size_type
+    AdminSizeType:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CodeEnum'
+          readOnly: true
+        is_active:
+          type: boolean
+      required:
+      - code
+      - id
+      - name
+    AdminUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 30
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - email
+      - id
+      - last_login
+      - updated_at
+    Cart:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/CartStatusEnum'
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+          readOnly: true
+        total_items:
+          type: integer
+          readOnly: true
+        subtotal:
+          type: number
+          format: double
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - id
+      - items
+      - status
+      - subtotal
+      - total_items
+      - updated_at
+    CartItem:
+      type: object
+      description: Read-only representation of a cart item.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        variant:
+          type: integer
+          readOnly: true
+        product_name:
+          type: string
+          readOnly: true
+        sku:
+          type: string
+          readOnly: true
+        color:
+          type: string
+          readOnly: true
+        size:
+          type: string
+          readOnly: true
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+        available:
+          type: integer
+          readOnly: true
+          description: Jumlah unit variant yang saat ini tersedia untuk dibeli.
+        quantity:
+          type: integer
+          readOnly: true
+        subtotal:
+          type: number
+          format: double
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - available
+      - color
+      - created_at
+      - id
+      - price
+      - product_name
+      - quantity
+      - size
+      - sku
+      - subtotal
+      - updated_at
+      - variant
+    CartStatusEnum:
+      enum:
+      - ACTIVE
+      - CONVERTED
+      type: string
+      description: |-
+        * `ACTIVE` - Active
+        * `CONVERTED` - Converted
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        code:
+          type: string
+          pattern: ^[A-Z0-9]+(?:-[A-Z0-9]+)*$
+          maxLength: 10
+        default_size_type:
+          allOf:
+          - $ref: '#/components/schemas/SizeType'
+          readOnly: true
+        is_active:
+          type: boolean
+      required:
+      - code
+      - default_size_type
+      - id
+      - name
+    CheckoutItem:
+      type: object
+      properties:
+        cart_item_id:
+          type: integer
+        variant_id:
+          type: integer
+        product_name:
+          type: string
+        sku:
+          type: string
+        color:
+          type: string
+        size:
+          type: string
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+        available:
+          type: integer
+        quantity:
+          type: integer
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+      required:
+      - available
+      - cart_item_id
+      - color
+      - price
+      - product_name
+      - quantity
+      - size
+      - sku
+      - subtotal
+      - variant_id
+    CheckoutShippingMethod:
+      type: object
+      properties:
+        id:
+          type: integer
+        code:
+          type: string
+        courier:
+          type: string
+        service:
+          type: string
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+      required:
+      - code
+      - courier
+      - id
+      - price
+      - service
+    CheckoutSummary:
+      type: object
+      properties:
+        cart_id:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckoutItem'
+        shipping_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckoutShippingMethod'
+        selected_shipping_method_id:
+          type: integer
+          nullable: true
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+        discount_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+        shipping_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+        tax_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+        grand_total:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+      required:
+      - cart_id
+      - discount_amount
+      - grand_total
+      - items
+      - selected_shipping_method_id
+      - shipping_amount
+      - shipping_methods
+      - subtotal
+      - tax_amount
+    CodeEnum:
+      enum:
+      - APPAREL
+      - FOOTWEAR
+      - ONE_SIZE
+      type: string
+      description: |-
+        * `APPAREL` - Apparel
+        * `FOOTWEAR` - Footwear
+        * `ONE_SIZE` - One Size
+    Color:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        code:
+          type: string
+          pattern: ^[A-Z0-9]+(?:-[A-Z0-9]+)*$
+          maxLength: 10
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        hex_code:
+          type: string
+          pattern: ^#[0-9A-Fa-f]{6}$
+          maxLength: 7
+        is_active:
+          type: boolean
+      required:
+      - code
+      - hex_code
+      - id
+      - name
+      - slug
+    GenderEnum:
+      enum:
+      - men
+      - women
+      - unisex
+      type: string
+      description: |-
+        * `men` - Men
+        * `women` - Women
+        * `unisex` - Unisex
+    ImageTypeEnum:
+      enum:
+      - primary
+      - detail
+      - additional
+      type: string
+      description: |-
+        * `primary` - Primary
+        * `detail` - Detail
+        * `additional` - Additional
+    Inventory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        variant:
+          type: integer
+        variant_sku:
+          type: string
+          readOnly: true
+        stock_on_hand:
+          type: integer
+          readOnly: true
+        reserved:
+          type: integer
+          readOnly: true
+        available:
+          type: integer
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - available
+      - id
+      - reserved
+      - stock_on_hand
+      - updated_at
+      - variant
+      - variant_sku
+    InventoryReservation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          readOnly: true
+        inventory:
+          type: integer
+          readOnly: true
+        variant_sku:
+          type: string
+          readOnly: true
+        quantity:
+          type: integer
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/InventoryReservationStatusEnum'
+          readOnly: true
+        expires_at:
+          type: string
+          format: date-time
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - expires_at
+      - id
+      - inventory
+      - order
+      - order_number
+      - quantity
+      - status
+      - updated_at
+      - variant_sku
+    InventoryReservationStatusEnum:
+      enum:
+      - ACTIVE
+      - RELEASED
+      - CONFIRMED
+      - EXPIRED
+      type: string
+      description: |-
+        * `ACTIVE` - Active
+        * `RELEASED` - Released
+        * `CONFIRMED` - Confirmed
+        * `EXPIRED` - Expired
+    MidtransNotification:
+      type: object
+      description: |-
+        OpenAPI schema and basic validation for Midtrans HTTP Notification.
+
+        Signature verification is handled separately by MidtransClient.
+        Business processing is handled by notification_services.
+      properties:
+        order_id:
+          type: string
+        transaction_id:
+          type: string
+        transaction_status:
+          type: string
+        status_code:
+          type: string
+        status_message:
+          type: string
+        gross_amount:
+          type: string
+        currency:
+          type: string
+        payment_type:
+          type: string
+        fraud_status:
+          type: string
+        transaction_time:
+          type: string
+        settlement_time:
+          type: string
+        expiry_time:
+          type: string
+        signature_key:
+          type: string
+        bank:
+          type: string
+        va_numbers:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        bill_key:
+          type: string
+        biller_code:
+          type: string
+        qr_string:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: {}
+      required:
+      - gross_amount
+      - order_id
+      - signature_key
+      - status_code
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status657Enum'
+          readOnly: true
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+        discount_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+        shipping_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+        shipping_method_code:
+          type: string
+          readOnly: true
+        shipping_courier:
+          type: string
+          readOnly: true
+        shipping_service:
+          type: string
+          readOnly: true
+        tax_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+          readOnly: true
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderAddress'
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - addresses
+      - created_at
+      - currency
+      - discount_amount
+      - id
+      - items
+      - order_number
+      - shipping_amount
+      - shipping_courier
+      - shipping_method_code
+      - shipping_service
+      - status
+      - subtotal
+      - tax_amount
+      - total_amount
+    OrderAddress:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        address_type:
+          allOf:
+          - $ref: '#/components/schemas/AddressTypeEnum'
+          readOnly: true
+        recipient_name:
+          type: string
+          readOnly: true
+        phone_number:
+          type: string
+          readOnly: true
+        address_line:
+          type: string
+          readOnly: true
+        sub_district:
+          type: string
+          readOnly: true
+        district:
+          type: string
+          readOnly: true
+        city:
+          type: string
+          readOnly: true
+        province:
+          type: string
+          readOnly: true
+        postal_code:
+          type: string
+          readOnly: true
+        country:
+          type: string
+          readOnly: true
+      required:
+      - address_line
+      - address_type
+      - city
+      - country
+      - district
+      - id
+      - phone_number
+      - postal_code
+      - province
+      - recipient_name
+      - sub_district
+    OrderCreate:
+      type: object
+      properties:
+        shipping_address_id:
+          type: integer
+          writeOnly: true
+        shipping_address:
+          allOf:
+          - $ref: '#/components/schemas/ShippingAddressInput'
+          writeOnly: true
+        shipping_method_id:
+          type: integer
+      required:
+      - shipping_method_id
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product_name_snapshot:
+          type: string
+          readOnly: true
+        sku_snapshot:
+          type: string
+          readOnly: true
+        variant_snapshot:
+          type: string
+          readOnly: true
+        unit_price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+        quantity:
+          type: integer
+          readOnly: true
+        subtotal:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+      required:
+      - id
+      - product_name_snapshot
+      - quantity
+      - sku_snapshot
+      - subtotal
+      - unit_price
+      - variant_snapshot
+    OrderList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status657Enum'
+          readOnly: true
+        total_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - currency
+      - id
+      - order_number
+      - status
+      - total_amount
+    PaginatedAddressList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Address'
+    PaginatedAdminCategoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminCategory'
+    PaginatedAdminColorList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminColor'
+    PaginatedAdminProductColorList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminProductColor'
+    PaginatedAdminProductImageList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminProductImage'
+    PaginatedAdminProductList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminProduct'
+    PaginatedAdminProductVariantList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminProductVariant'
+    PaginatedAdminSizeList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminSize'
+    PaginatedAdminSizeTypeList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminSizeType'
+    PaginatedAdminUserList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminUser'
+    PaginatedCategoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+    PaginatedColorList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Color'
+    PaginatedInventoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Inventory'
+    PaginatedInventoryReservationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryReservation'
+    PaginatedProductList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+    PaginatedSizeList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Size'
+    PaginatedSizeTypeList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SizeType'
+    PaginatedUserList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+    PasswordResetConfirm:
+      type: object
+      properties:
+        uid:
+          type: string
+        token:
+          type: string
+        new_password:
+          type: string
+      required:
+      - new_password
+      - token
+      - uid
+    PatchedAddress:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        label:
+          type: string
+          description: Label alamat, misalnya Home, Office, atau Apartment.
+          maxLength: 50
+        recipient_name:
+          type: string
+          description: Nama penerima barang.
+          maxLength: 150
+        phone_number:
+          type: string
+          description: Nomor telepon penerima.
+          maxLength: 30
+        address_line:
+          type: string
+          description: Alamat lengkap, termasuk nama jalan dan nomor rumah.
+        sub_district:
+          type: string
+          description: Kelurahan/desa.
+          maxLength: 100
+        district:
+          type: string
+          description: Kecamatan.
+          maxLength: 100
+        city:
+          type: string
+          description: Kota/kabupaten.
+          maxLength: 100
+        province:
+          type: string
+          description: Provinsi.
+          maxLength: 100
+        postal_code:
+          type: string
+          description: Kode pos.
+          maxLength: 20
+        country:
+          type: string
+          description: 'Negara. Default: Indonesia.'
+          maxLength: 100
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedAdminCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+        code:
+          type: string
+          pattern: ^[A-Z0-9]+(?:-[A-Z0-9]+)*$
+          maxLength: 10
+        default_size_type:
+          type: integer
+        next_product_sequence:
+          type: integer
+          readOnly: true
+        is_active:
+          type: boolean
+    PatchedAdminColor:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        code:
+          type: string
+          pattern: ^[A-Z0-9]+(?:-[A-Z0-9]+)*$
+          maxLength: 10
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        hex_code:
+          type: string
+          pattern: ^#[0-9A-Fa-f]{6}$
+          maxLength: 7
+        is_active:
+          type: boolean
+    PatchedAdminProduct:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product_code:
+          type: string
+          readOnly: true
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        name:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        material:
+          type: string
+          maxLength: 200
+        badge:
+          type: string
+          maxLength: 50
+        category:
+          type: integer
+        gender:
+          $ref: '#/components/schemas/GenderEnum'
+        size_type:
+          type: integer
+          nullable: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedAdminProductColor:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+        color:
+          type: integer
+        is_active:
+          type: boolean
+    PatchedAdminProductImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+        product_color:
+          type: integer
+        image:
+          type: string
+          format: uri
+        image_type:
+          $ref: '#/components/schemas/ImageTypeEnum'
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          default: 0
+    PatchedAdminProductVariant:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sku:
+          type: string
+          readOnly: true
+        product_color:
+          type: integer
+        size:
+          type: integer
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+        is_active:
+          type: boolean
+    PatchedAdminSize:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+        size_type:
+          type: integer
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        is_active:
+          type: boolean
+    PatchedAdminSizeType:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CodeEnum'
+          readOnly: true
+        is_active:
+          type: boolean
+    PatchedAdminUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 100
+        last_name:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 30
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedUpdateCartItem:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          minimum: 1
+          description: Jumlah unit baru.
+    PatchedUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          readOnly: true
+        provider:
+          allOf:
+          - $ref: '#/components/schemas/ProviderEnum'
+          readOnly: true
+        payment_method:
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodEnum'
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/PaymentStatusEnum'
+          readOnly: true
+        transaction_id:
+          type: string
+          readOnly: true
+        amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+        currency:
+          type: string
+          readOnly: true
+        bank:
+          type: string
+          readOnly: true
+        va_number:
+          type: string
+          readOnly: true
+        bill_key:
+          type: string
+          readOnly: true
+        biller_code:
+          type: string
+          readOnly: true
+        qr_string:
+          type: string
+          readOnly: true
+        payment_url:
+          type: string
+          format: uri
+          readOnly: true
+        paid_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        expires_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - amount
+      - bank
+      - bill_key
+      - biller_code
+      - created_at
+      - currency
+      - expires_at
+      - id
+      - order_number
+      - paid_at
+      - payment_method
+      - payment_url
+      - provider
+      - qr_string
+      - status
+      - transaction_id
+      - va_number
+    PaymentCreate:
+      type: object
+      properties:
+        order_number:
+          type: string
+          maxLength: 30
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethodEnum'
+      required:
+      - order_number
+      - payment_method
+    PaymentMethodEnum:
+      enum:
+      - BCA_VA
+      - BNI_VA
+      - BRI_VA
+      - MANDIRI
+      - PERMATA_VA
+      - CIMB_VA
+      - GOPAY
+      - SHOPEEPAY
+      - QRIS
+      type: string
+      description: |-
+        * `BCA_VA` - BCA Virtual Account
+        * `BNI_VA` - BNI Virtual Account
+        * `BRI_VA` - BRI Virtual Account
+        * `MANDIRI` - Mandiri Bill
+        * `PERMATA_VA` - Permata Virtual Account
+        * `CIMB_VA` - CIMB Virtual Account
+        * `GOPAY` - GoPay
+        * `SHOPEEPAY` - ShopeePay
+        * `QRIS` - QRIS
+    PaymentStatusEnum:
+      enum:
+      - PENDING
+      - PAID
+      - FAILED
+      - EXPIRED
+      - CANCELLED
+      type: string
+      description: |-
+        * `PENDING` - Pending
+        * `PAID` - Paid
+        * `FAILED` - Failed
+        * `EXPIRED` - Expired
+        * `CANCELLED` - Cancelled
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product_code:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 200
+        slug:
+          type: string
+          readOnly: true
+          pattern: ^[-a-zA-Z0-9_]+$
+        description:
+          type: string
+        material:
+          type: string
+          maxLength: 200
+        badge:
+          type: string
+          maxLength: 50
+        category:
+          allOf:
+          - $ref: '#/components/schemas/Category'
+          readOnly: true
+        gender:
+          $ref: '#/components/schemas/GenderEnum'
+        size_type:
+          allOf:
+          - $ref: '#/components/schemas/SizeType'
+          readOnly: true
+        product_colors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductColor'
+          readOnly: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+          readOnly: true
+        is_active:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - category
+      - created_at
+      - gender
+      - id
+      - images
+      - name
+      - product_code
+      - product_colors
+      - size_type
+      - slug
+      - updated_at
+    ProductColor:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        color:
+          allOf:
+          - $ref: '#/components/schemas/Color'
+          readOnly: true
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariant'
+          readOnly: true
+        is_active:
+          type: boolean
+      required:
+      - color
+      - id
+      - variants
+    ProductImage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product_color:
+          type: integer
+        image:
+          type: string
+          format: uri
+        image_type:
+          $ref: '#/components/schemas/ImageTypeEnum'
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          default: 0
+      required:
+      - id
+      - image
+      - image_type
+      - product_color
+    ProductVariant:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sku:
+          type: string
+          readOnly: true
+        size:
+          allOf:
+          - $ref: '#/components/schemas/ProductVariantSize'
+          readOnly: true
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+        available:
+          type: integer
+          readOnly: true
+          description: Jumlah unit yang saat ini tersedia untuk dibeli. Dihitung dari
+            stock_on_hand - reserved. Jika inventory belum tersedia, nilainya 0.
+        is_active:
+          type: boolean
+      required:
+      - available
+      - id
+      - price
+      - size
+      - sku
+    ProductVariantSize:
+      type: object
+      description: |-
+        Simplified size representation for ProductVariant.
+
+        Product already exposes its size_type, so repeating size_type
+        inside every variant would be redundant.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        is_active:
+          type: boolean
+      required:
+      - id
+      - name
+    ProviderEnum:
+      enum:
+      - MIDTRANS
+      type: string
+      description: '* `MIDTRANS` - Midtrans'
+    SendEmailReset:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    SetPassword:
+      type: object
+      properties:
+        new_password:
+          type: string
+        current_password:
+          type: string
+      required:
+      - current_password
+      - new_password
+    SetUsername:
+      type: object
+      properties:
+        current_password:
+          type: string
+        new_email:
+          type: string
+          format: email
+          title: Email
+          maxLength: 254
+      required:
+      - current_password
+      - new_email
+    Shipment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        order_number:
+          type: string
+          readOnly: true
+          description: Nomor order yang terkait dengan shipment.
+        order_status:
+          type: string
+          readOnly: true
+          description: Status keseluruhan order.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/ShipmentStatusEnum'
+          readOnly: true
+        courier:
+          type: string
+          readOnly: true
+        service:
+          type: string
+          readOnly: true
+        tracking_number:
+          type: string
+          readOnly: true
+        shipped_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        delivered_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShipmentItem'
+          readOnly: true
+      required:
+      - courier
+      - created_at
+      - delivered_at
+      - id
+      - items
+      - order_number
+      - order_status
+      - service
+      - shipped_at
+      - status
+      - tracking_number
+      - updated_at
+    ShipmentItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product_name_snapshot:
+          type: string
+          readOnly: true
+        sku_snapshot:
+          type: string
+          readOnly: true
+        quantity:
+          type: integer
+          readOnly: true
+      required:
+      - id
+      - product_name_snapshot
+      - quantity
+      - sku_snapshot
+    ShipmentShip:
+      type: object
+      properties:
+        tracking_number:
+          type: string
+          description: Nomor resi dari kurir.
+          maxLength: 100
+      required:
+      - tracking_number
+    ShipmentStatusEnum:
+      enum:
+      - PENDING
+      - PROCESSING
+      - SHIPPED
+      - DELIVERED
+      - CANCELLED
+      type: string
+      description: |-
+        * `PENDING` - Pending
+        * `PROCESSING` - Processing
+        * `SHIPPED` - Shipped
+        * `DELIVERED` - Delivered
+        * `CANCELLED` - Cancelled
+    ShippingAddressInput:
+      type: object
+      properties:
+        recipient_name:
+          type: string
+          maxLength: 150
+        phone_number:
+          type: string
+          maxLength: 30
+        address_line:
+          type: string
+        sub_district:
+          type: string
+          maxLength: 100
+        district:
+          type: string
+          maxLength: 100
+        city:
+          type: string
+          maxLength: 100
+        province:
+          type: string
+          maxLength: 100
+        postal_code:
+          type: string
+          maxLength: 20
+        country:
+          type: string
+          default: Indonesia
+          maxLength: 100
+      required:
+      - address_line
+      - city
+      - district
+      - phone_number
+      - postal_code
+      - province
+      - recipient_name
+      - sub_district
+    ShippingMethod:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        code:
+          type: string
+          readOnly: true
+        courier:
+          type: string
+          readOnly: true
+        service:
+          type: string
+          readOnly: true
+        price:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,14}(?:\.\d{0,0})?$
+          readOnly: true
+      required:
+      - code
+      - courier
+      - id
+      - price
+      - service
+    Size:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 30
+        size_type:
+          allOf:
+          - $ref: '#/components/schemas/SizeType'
+          readOnly: true
+        sort_order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        is_active:
+          type: boolean
+      required:
+      - id
+      - name
+      - size_type
+    SizeType:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        code:
+          allOf:
+          - $ref: '#/components/schemas/CodeEnum'
+          readOnly: true
+        is_active:
+          type: boolean
+      required:
+      - code
+      - id
+      - name
+    Status657Enum:
+      enum:
+      - PENDING
+      - CONFIRMED
+      - PROCESSING
+      - SHIPPED
+      - DELIVERED
+      - CANCELLED
+      type: string
+      description: |-
+        * `PENDING` - Pending
+        * `CONFIRMED` - Confirmed
+        * `PROCESSING` - Processing
+        * `SHIPPED` - Shipped
+        * `DELIVERED` - Delivered
+        * `CANCELLED` - Cancelled
+    TokenObtainPair:
+      type: object
+      properties:
+        email:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - email
+      - password
+      - refresh
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    TokenVerify:
+      type: object
+      properties:
+        token:
+          type: string
+          writeOnly: true
+      required:
+      - token
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+      required:
+      - email
+      - id
+    UserCreate:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        id:
+          type: integer
+          readOnly: true
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - email
+      - id
+      - password
+    UsernameResetConfirm:
+      type: object
+      properties:
+        new_email:
+          type: string
+          format: email
+          title: Email
+          maxLength: 254
+      required:
+      - new_email
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+- name: Authentication
+  description: User authentication and authorization
+- name: Accounts
+  description: User account and profile management
+- name: User Addresses
+  description: User Addresses management
+- name: Catalog
+  description: Customers Catalog endpoints
+- name: Cart
+  description: Shopping cart management
+- name: Checkout
+  description: Checkout and order preparation
+- name: Orders
+  description: Order management
+- name: Payments
+  description: Payment and transaction management
+- name: Shipping
+  description: Shipping and delivery management
+- name: Admin Accounts
+  description: Administrative customer account management
+- name: Admin Catalog
+  description: Administrative Catalog endpoints
+- name: Admin Inventory
+  description: Administrative Inventory endpoints
+- name: Admin Orders
+  description: Administrative Orders endpoints
+- name: Admin Shipping
+  description: Administrative Shipping endpoints
