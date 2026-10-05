@@ -1,18 +1,28 @@
-# =========================================================================
-# ROOT PROTECTION (Mencegah file konfigurasi nyasar di root folder)
-# =========================================================================
-/Pipfile
-/Pipfile.lock
-/.env
-/.env.example
+# ============================================================
+# ENVIRONMENT & SECRETS
+# ============================================================
 
-# =========================================================================
-# FRONTEND (React / Vite)
-# =========================================================================
+.env
+.env.*
+!.env.example
+
+# Private keys / secrets
+backend/secrets/
+
+
+# ============================================================
+# FRONTEND — React / Vite / Node
+# ============================================================
+
 frontend/node_modules/
 frontend/dist/
 frontend/dist-ssr/
+
+# Local environment/config files
 frontend/*.local
+frontend/.env
+
+# Logs
 frontend/logs/
 frontend/*.log
 frontend/npm-debug.log*
@@ -21,28 +31,77 @@ frontend/yarn-error.log*
 frontend/pnpm-debug.log*
 frontend/lerna-debug.log*
 
-# =========================================================================
-# BACKEND (Django / Pipenv)
-# =========================================================================
-backend/__pycache__/
-backend/*.py[cod]
-backend/*$py.class
-backend/.venv/
-backend/Pipenv.venv
-backend/Pipfile
-backend/Pipfile.lock
-backend/.env  
-backend/.env.example  
 
-# =========================================================================
-# EDITOR, SYSTEM & GLOBAL SENSITIVE FILES
-# =========================================================================
+# ============================================================
+# BACKEND — Django / Python
+# ============================================================
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+backend/.venv/
+backend/venv/
+backend/env/
+backend/Pipenv.venv/
+
+# Django logs
+backend/*.log
+
+# Test / coverage cache
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# Local Django settings
+backend/local_settings.py
+
+
+# ============================================================
+# DJANGO MEDIA — optional
+# ============================================================
+
+# Uncomment if uploaded files should NOT be committed
+# backend/media/
+
+
+# ============================================================
+# EDITOR
+# ============================================================
+
+# VS Code
 .vscode/*
+!.vscode/settings.json
 !.vscode/extensions.json
+
+# JetBrains
 .idea/
-.DS_Store
+
+# Visual Studio
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+
+# ============================================================
+# OPERATING SYSTEM
+# ============================================================
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+
+# ============================================================
+# BUILD / CACHE / TEMP
+# ============================================================
+
+*.tmp
+*.temp
+.cache/

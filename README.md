@@ -44,38 +44,93 @@ project-gidora/
     ├── src/
     │   ├── assets/
     │   │   ├── products/
+    │   │   │   └── ...(assets products)
     │   │   └── ...(assets campuran)
     │   ├── components/
-    │   │   ├── Footer.jsx
-    │   │   ├── Navbar.jsx
-    │   │   ├── ProductCard.jsx
-    │   │   ├── ProductFilterDrawer.jsx
-    │   │   ├── ProductGrid.jsx
-    │   │   ├── ProductToolbar.jsx
-    │   │   └── SearchOverlay.jsx
-    │   ├── data/
-    │   │   └── products.js
+    │   │   ├── layout/
+    │   │   │   ├── Footer.jsx
+    │   │   │   ├── Navbar.jsx
+    │   │   │   └── SearchOverlay.jsx
+    │   │   └── ui/
+    │   │       ├── Button.jsx
+    │   │       ├── DatePicker.jsx
+    │   │       ├── ErrorMessage.jsx
+    │   │       ├── FormField.jsx
+    │   │       ├── Input.jsx
+    │   │       └── TextButton.jsx
+    │   ├── features/
+    │   │   ├── account/
+    │   │   │   └── components/
+    │   │   │       ├── AccountHeader.jsx
+    │   │   │       └── AccountNavigation.jsx
+    │   │   ├── admin/
+    │   │   │   ├── components/
+    │   │   │   │   ├── AdminHeader.jsx
+    │   │   │   │   ├── AdminSidebar.jsx
+    │   │   │   │   └── AdminStatCard.jsx
+    │   │   │   └── services/
+    │   │   │       └── adminProductService.js
+    │   │   ├── cart/
+    │   │   │   ├── components/
+    │   │   │   ├── context/
+    │   │   │   │   └── CartContext.jsx
+    │   │   │   └── utils/
+    │   │   ├── order/
+    │   │   │   └── orderService.js
+    │   │   └── products/
+    │   │       ├── components/
+    │   │       │   ├── ProductCard.jsx
+    │   │       │   ├── ProductFilterDrawer.jsx
+    │   │       │   ├── ProductGallery.jsx
+    │   │       │   ├── ProductGrid.jsx
+    │   │       │   ├── ProductInfo.jsx
+    │   │       │   └── ProductToolbar.jsx
+    │   │       ├── data/
+    │   │       │   ├── productOptions.js
+    │   │       │   └── products.js
+    │   │       └── utils/
+    │   │           └── productFilter.js
+    │   ├── hooks/
+    │   │   └── useForm.js
     │   ├── layouts/
+    │   │   ├── AccountLayout.jsx
+    │   │   ├── AdminLayout.jsx
     │   │   └── MainLayout.jsx
     │   ├── pages/
+    │   │   ├── admin/
+    │   │   │   ├── AdminCustomers.jsx
+    │   │   │   ├── AdminDashboard.jsx
+    │   │   │   ├── AdminOrders.jsx
+    │   │   │   ├── AdminProductCreate.jsx
+    │   │   │   ├── AdminProductEdit.jsx
+    │   │   │   └── AdminProducts.jsx
+    │   │   ├── auth/
+    │   │   │   ├── Login.jsx
+    │   │   │   └── Register.jsx
+    │   │   ├── customer/
+    │   │   │   ├── account/
+    │   │   │   │   ├── UserAddresses.jsx
+    │   │   │   │   ├── UserOrders.jsx
+    │   │   │   │   └── UserProfile.jsx
+    │   │   │   ├── Cart.jsx
+    │   │   │   ├── Checkout.jsx
+    │   │   │   └── OrderSuccess.jsx
     │   │   ├── About.jsx
     │   │   ├── Home.jsx
-    │   │   ├── Login.jsx
     │   │   ├── ProductDetail.jsx
-    │   │   ├── Products.jsx
-    │   │   └── Register.jsx
+    │   │   └── Products.jsx
     │   ├── routes/
     │   │   └── AppRoutes.jsx
     │   ├── services/
-    │   ├── utilities/
+    │   ├── styles/
+    │   │   └── index.css
+    │   ├── utils/
     │   │   ├── PageTransition.jsx
-    │   │   ├── productFilter.js
     │   │   ├── ScrollToTop.jsx
     │   │   └── SmoothScroll.jsx
     │   ├── App.jsx
-    │   ├── index.css
     │   └── main.jsx
-    ├── public/
+    ├── jsconfig.json
     ├── package.json
     ├── pnpm-lock.yaml
     └── vite.config.js
